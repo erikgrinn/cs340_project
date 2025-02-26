@@ -9,12 +9,44 @@ function CarsPurchasePage() {
     purchase_id: 0
   });
 
+  // State for tracking the update form
+  const [editData, setEditData] = useState(null); 
+  const [dropdownOptions, setDropdownOptions] = useState({
+    cars: [],
+    purchases: []
+  });
+
+  const fetchDropdownOptions = async () => {
+    try {
+      const carsURL = `${import.meta.env.VITE_API_URL}/api/cars`; // Adjust API URL
+      const purchasesURL = `${import.meta.env.VITE_API_URL}/api/purchases`;
+  
+      const [carsResponse, purchasesResponse] = await Promise.all([
+        axios.get(carsURL),
+        axios.get(purchasesURL)
+      ]);
+  
+      setDropdownOptions({
+        cars: carsResponse.data,
+        purchases: purchasesResponse.data
+      });
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchCarsPurchasesData();
+    fetchDropdownOptions(); // Fetch dropdown options on load
+  }, []);
+
   const fetchCarsPurchasesData = async () => {
     try {
       // Construct the URL for the API call
       const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases`;
       const response = await axios.get(URL);
       setcarsPurchasesData(response.data);
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching cars purchases data:', error);
       alert('Error fetching cars purchases data from the server.');
@@ -33,6 +65,14 @@ function CarsPurchasePage() {
     });
   }
 
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditData({
+      ...editData,
+      [name]: value
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -45,6 +85,23 @@ function CarsPurchasePage() {
     }
 }
 
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${editData.car_purch_id}`;
+    await axios.put(URL, editData);
+    setEditData(null); // Hide the form after update
+    fetchCarsPurchasesData(); // Refresh data
+  } catch (error) {
+    console.error('Error updating cars purchase:', error);
+    alert('Error updating cars purchase.');
+  }
+};
+
+const handleEditClick = (carspurchases) => {
+  setEditData(carspurchases); // Load data into form
+};
+
   let content;
   if (!carsPurchasesData || carsPurchasesData.length === 0) {
     content = <p>No cars purchases data found.</p>;
@@ -54,19 +111,88 @@ function CarsPurchasePage() {
         {carsPurchasesData.map((carspurchases) => (
           <li key={carspurchases.car_purch_id}>
             <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-            Purchase ID: {carspurchases.car_id}<br />
-            Car ID: {carspurchases.purchase_id}
+            Car ID: {carspurchases.car_id}<br />
+            Purchase ID: {carspurchases.purchase_id}
+            <br />
+            <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
+
+            {/* Update Form - Only Shows When Editing */}
+            {/* {editData && (
+            <form onSubmit={handleEditSubmit}>
+              <h3>Editing Car Purchase ID: {editData.car_purch_id}</h3>
+
+              <label>
+                Car:
+                <select 
+                  name="car_id" 
+                  value={editData.car_id} 
+                  onChange={(e) => setEditData({ ...editData, car_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select>
+              </label><br />
+
+              <label>
+                Purchase:
+                <select 
+                  name="purchase_id" 
+                  value={editData.purchase_id} 
+                  onChange={(e) => setEditData({ ...editData, purchase_id: e.target.value })}
+                >
+                  <option value="">Select a Purchase</option>
+                  {dropdownOptions.purchases.map((purchase) => (
+                    <option key={purchase.purchase_id} value={purchase.purchase_id}>
+                      {purchase.date} (ID: {purchase.purchase_id})
+                    </option>
+                  ))}
+                </select>
+              </label><br />
+
+              <button type="submit">Update</button>
+              <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+            </form>
+          )} */}
+            {editData && editData.car_purch_id === carspurchases.car_purch_id && (
+              <form onSubmit={handleEditSubmit}>
+                <label>
+                  Car ID:
+                  <input type="number" name="car_id" value={editData.car_id} onChange={handleEditChange} required />
+                </label><br />
+                <label>
+                  Purchase ID:
+                  <input type="number" name="purchase_id" value={editData.purchase_id} onChange={handleEditChange} required />
+                </label><br />
+                <button type="submit">Update</button>
+                <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+              </form>
+            )}
           </li>
         ))}
       </ul>
     );
+    // content = (
+    //   <ul>
+    //     {carsPurchasesData.map((carspurchases) => (
+    //       <li key={carspurchases.car_purch_id}>
+    //         <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
+    //         Purchase ID: {carspurchases.car_id}<br />
+    //         Car ID: {carspurchases.purchase_id}
+    //       </li>
+    //     ))}
+    //   </ul>
+    // );
   }
 
   return (
     <>
-      <h2>Dealerships Data</h2>
+      <h2>Cars Purchase Data</h2>
       {content}
-      <h2>Add a new Dealership!</h2>
+      <h2>Add a new Cars Purchase!</h2>
       <form onSubmit={handleSubmit}>
       <label>
         {/* Select City:

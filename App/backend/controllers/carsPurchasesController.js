@@ -2,7 +2,7 @@
 const { create } = require("lodash");
 const db = require("../database/config");
 
-// Get all dealerships
+// Get all Cars Purchases
 const getCarsPurchases = async (req, res) => {
   try {
     // Adjust this query to match your actual dealerships table structure
@@ -22,7 +22,7 @@ const getCarsPurchases = async (req, res) => {
   }
 };
 
-// Get dealership by ID
+// Get Cars Purchase by ID
 const getCarsPurchaseByID = async (req, res) => {
   try {
     const carsPurchaseID = req.params.id;
@@ -45,6 +45,7 @@ const createCarsPurchases = async (req, res) => {
   try {
     // Adjust these fields to match your dealerships table
     const { car_id, purchase_id } = req.body;
+    const test = req.params
     const query = "INSERT INTO Cars_Purchases (car_id, purchase_id) VALUES (?, ?)";
     
     const response = await db.pool.query(query, [car_id, purchase_id]);
@@ -55,28 +56,41 @@ const createCarsPurchases = async (req, res) => {
   }
 };
 
-// // Update dealership
-// const updateDealership = async (req, res) => {
-//   const dealershipID = req.params.id;
-//   // Adjust these fields to match your dealerships table
-//   const { name, location, phone } = req.body;
-  
+// Update Cars Purchases
+// app.put('/api/carspurchases/:id', async (req, res) => {
 //   try {
-//     const query = "UPDATE Dealerships SET name=?, location=?, phone=? WHERE id=?";
-//     const values = [name, location, phone, dealershipID];
-    
-//     const [result] = await db.pool.query(query, values);
-    
-//     if (result.affectedRows === 0) {
-//       return res.status(404).json({ error: "Dealership not found" });
-//     }
-    
-//     res.json({ message: "Dealership updated successfully" });
+//     const { car_id, purchase_id } = req.body;
+//     const { id } = req.params;
+//     const query = 'UPDATE carspurchases SET car_id = ?, purchase_id = ? WHERE car_purch_id = ?';
+//     await db.query(query, [car_id, purchase_id, id]);
+//     res.status(200).json({ message: 'Car purchase updated successfully!' });
 //   } catch (error) {
-//     console.error("Error updating dealership:", error);
-//     res.status(500).json({ error: "Error updating dealership" });
+//     console.error('Error updating car purchase:', error);
+//     res.status(500).send('Server error!');
 //   }
-// };
+// });
+const updateCarsPurchases = async (req, res) => {
+  const carsPurchaseID = req.params.id;
+  // Adjust these fields to match your dealerships table
+  const { car_purch_id, car_id, purchase_id } = req.body;
+  
+  try {
+    const query = "UPDATE Cars_Purchases SET car_id=?, purchase_id=? WHERE car_purch_id=?";
+    const values = [car_id, purchase_id, carsPurchaseID];
+    
+    const [result] = await db.pool.query(query, values);
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Car Purchase not found" });
+    }
+    
+    res.json({ message: "Car Purchase updated successfully" });
+  } catch (error) {
+    console.error("Error updating dealership:", error);
+    res.status(500).json({ error: "Error updating Car Purchase" });
+  }
+};
+
 
 // // Delete dealership
 // const deleteDealership = async (req, res) => {
@@ -101,6 +115,6 @@ module.exports = {
   getCarsPurchases,
   getCarsPurchaseByID,
   createCarsPurchases,
-  // updateDealership,
+  updateCarsPurchases,
   // deleteDealership,
 };
