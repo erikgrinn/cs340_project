@@ -1,4 +1,5 @@
 // Use the same database connection method as your diagnostic endpoint
+const { create } = require("lodash");
 const db = require("../database/config");
 
 // Get all dealerships
@@ -39,20 +40,20 @@ const getCarsPurchaseByID = async (req, res) => {
   }
 };
 
-// // Create new dealership
-// const createDealership = async (req, res) => {
-//   try {
-//     // Adjust these fields to match your dealerships table
-//     const { city, quantity_sold, revenue } = req.body;
-//     const query = "INSERT INTO Dealerships (city, quantity_sold, revenue) VALUES (?, ?, ?)";
+// Create new Cars Purchases
+const createCarsPurchases = async (req, res) => {
+  try {
+    // Adjust these fields to match your dealerships table
+    const { car_id, purchase_id } = req.body;
+    const query = "INSERT INTO Cars_Purchases (car_id, purchase_id) VALUES (?, ?)";
     
-//     const response = await db.pool.query(query, [city, quantity_sold, revenue]);
-//     res.status(201).json(response);
-//   } catch (error) {
-//     console.error("Error creating dealership:", error);
-//     res.status(500).json({ error: "Error creating dealership" });
-//   }
-// };
+    const response = await db.pool.query(query, [car_id, purchase_id]);
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error creating cars purchases:", error);
+    res.status(500).json({ error: "Error creating cars purchases" });
+  }
+};
 
 // // Update dealership
 // const updateDealership = async (req, res) => {
@@ -99,7 +100,7 @@ const getCarsPurchaseByID = async (req, res) => {
 module.exports = {
   getCarsPurchases,
   getCarsPurchaseByID,
-  // createDealership,
+  createCarsPurchases,
   // updateDealership,
   // deleteDealership,
 };

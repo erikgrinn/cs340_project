@@ -54,8 +54,8 @@ function CarsPurchasePage() {
         {carsPurchasesData.map((carspurchases) => (
           <li key={carspurchases.car_purch_id}>
             <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-            Quantity Sold: {carspurchases.car_id}<br />
-            Revenue: {carspurchases.purchase_id}
+            Purchase ID: {carspurchases.car_id}<br />
+            Car ID: {carspurchases.purchase_id}
           </li>
         ))}
       </ul>

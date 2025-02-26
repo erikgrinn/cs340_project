@@ -3,14 +3,14 @@ const router = express.Router();
 const {
   getCarsPurchases,
   getCarsPurchaseByID,
-  // createCarsPurchases,
+  createCarsPurchases,
   // updateCarsPurchases,
   // deleteCarsPurchases,
 } = require("../controllers/carsPurchasesController");
 
 router.get("/", getCarsPurchases);
 router.get("/:id", getCarsPurchaseByID);
-// router.post("/", createCarsPurchases);
+router.post("/", createCarsPurchases);
 // router.put("/:id", updateCarsPurchases);
 // router.delete("/:id", deleteCarsPurchases);
 
