@@ -13,4 +13,4 @@ const pool = mysql.createPool({
 }).promise();
 
 // Export it for use in our application
-module.exports = pool;
+module.exports = { pool };

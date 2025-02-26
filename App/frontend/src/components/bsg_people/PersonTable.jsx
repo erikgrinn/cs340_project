@@ -8,7 +8,7 @@ const PeopleTable = () => {
 
   const fetchPeople = async () => {
     try {
-      const URL = import.meta.env.VITE_API_URL + "people";
+      const URL = `${import.meta.env.VITE_API_URL}/api/people`;
       const response = await axios.get(URL);
       setPeople(response.data);
     } catch (error) {
