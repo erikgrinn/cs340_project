@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/api/people", require("./routes/peopleRoutes"));
 // Add this line to your server.js where you define other routes
 app.use("/api/dealerships", require("./routes/dealershipsRoutes"));
-
+app.use("/api/carspurchases", require("./routes/carsPurchasesRoutes.js"))
 
 // Add your Connect DB Activitiy Code Below:
 // ...
