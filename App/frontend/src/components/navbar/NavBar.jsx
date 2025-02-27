@@ -3,27 +3,15 @@ import { MdLocalConvenienceStore } from "react-icons/md";
 
 const Navbar = () => {
   return (
-    <header>
-      <div>
-        <Link to="/">
-          <MdLocalConvenienceStore size={80} />
-        </Link>
-      </div>
-      <h1>Benton County Dealership Service</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/dealerships">Dealerships</Link>
-          </li>
-          <li>
-            <Link to="/carspurchases">Cars Purchases</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/">Cars</Link>
+      <Link to="/dealerships">Dealerships</Link>
+      <Link to="/carspurchases">Cars Purchases</Link>
+      <Link to="/">Customers</Link>
+      <Link to="/">Employees</Link>
+      <Link to="/">Purchases</Link>
+    </nav>
   );
 };
 

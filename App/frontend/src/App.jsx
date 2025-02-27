@@ -5,18 +5,47 @@ import PeoplePage from "./pages/PeoplePage";
 import DealershipPage from "./pages/DealershipPage";
 import CarsPurchasePage from "./pages/CarsPurchasePage";
 import Navbar from "./components/navbar/NavBar";
+import Header from "./components/header";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/people/*" element={<PeoplePage />} />
-        <Route path="/dealerships" element={<DealershipPage />} />
-        <Route path="/carspurchases" element={<CarsPurchasePage />} />
+        <Route path="/" element={
+          <>
+          <Header title="Index" />
+          <HomePage />
+          </>
+          } />
+        {/* <Route path="/people/*" element={<PeoplePage />} /> */}
+        <Route path="/dealerships" element={
+          <>
+          <Header title="Dealerships" />
+          <DealershipPage />
+          </>
+          } />
+        <Route path="/carspurchases" element={
+          <>
+            <Header title="Cars Purchases" />
+            <CarsPurchasePage />
+          </>
+          } />
+          <Route path="/" element={
+          <>
+          <Header title="Index" />
+          <HomePage />
+          </>
+          } />
+          <Route path="/" element={
+          <>
+          <Header title="Index" />
+          <HomePage />
+          </>
+          } />
       </Routes>
     </>
+    
   );
 }
 
