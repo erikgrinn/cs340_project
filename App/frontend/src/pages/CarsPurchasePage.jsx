@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 
 function CarsPurchasePage() {
+  // All relationships in DB. Properties: car_purch_id, car_id, purchase_id
   const [carsPurchasesData, setcarsPurchasesData] = useState([]);
+  // For a new car, set car_id and purchase_id, used in Add form
   const [newCarsPurchasesData, setNewcarsPurchases] = useState({
     car_id: 0,
     purchase_id: 0
   });
-  
+  // Stores ID of car_purch_id we want to delete, used in Remove form
   const [selectedCarPurchase, setSelectedCarPurchase] = useState('');
 
   const [editData, setEditData] = useState(null); 
+  // Properties from cars, purchases tables
   const [dropdownOptions, setDropdownOptions] = useState({
     cars: [],
     purchases: []
@@ -31,7 +34,6 @@ function CarsPurchasePage() {
         cars: carsResponse.data,
         purchases: purchasesResponse.data
       });
-      console.log(cars, purchaes)
     } catch (error) {
       console.error("Error fetching dropdown options:", error);
     }
@@ -204,20 +206,46 @@ function CarsPurchasePage() {
 
   return (
     <>
-      <h2>Cars Purchases Data</h2>
+    <div className="cars-purchases-container">
       {content}
-      <h2>Add a new Cars Purchase:</h2>
-      <form onSubmit={handleAddSubmit}>
-      <label>
-        Car_ID:
-        <input type="number" name="car_id" value={newCarsPurchasesData.car_id} onChange={handleChange} required />
-      </label><br />
-        <label>
+
+
+      <div id="insert" className="section">
+        <h2>Add a new Cars Purchase:</h2>
+        <form id="addCarPurchase" onSubmit={handleAddSubmit}>
+          <legend><strong>Add Car_Purchase</strong></legend>
+          <fieldset>
+            <label>Car ID:
+            <select
+              name="car_id"
+              value={newCarsPurchasesData.car_id}
+              onChange={handleChange}
+              required>
+                <option value="">Select a Car</option>
+                {dropdownOptions.cars.map((car) => (
+                  <option key={car.car_id} value={car.car_id}>
+                     {car.make_model} (ID: {car.car_id})
+                  </option>
+                ))}
+              </select>
+      
+            </label>
+            <label>
           Purchase_ID:
-          <input type="number" name="purchase_id" value={newCarsPurchasesData.purchase_id} onChange={handleChange} required />
-        </label><br />
-      <button type="submit">Add Cars_Purchases</button>
-      </form>
+          </label>
+          <select name="purchase_id" value={newCarsPurchasesData.purchase_id} onChange={handleChange} required >
+          <option value="">Select a Purchase</option>
+          {dropdownOptions.purchases.map((purchases) => (
+            <option key={purchases.purchase_id} value={purchases.purchase_id}>
+              (ID: {purchases.purchase_id})
+            </option>
+          ))}
+          </select>
+      <button className="btn" type="submit">Add Cars_Purchases</button>
+          </fieldset>
+        </form>
+      </div>
+     
       
       <h2>Remove a Cars Purchase</h2>
       <form onSubmit={handleRemoveSubmit}>
@@ -231,6 +259,7 @@ function CarsPurchasePage() {
        </select>
        <button type="submit">Remove Cars Purchases</button>
       </form>
+      </div>
     </>
   );
 }
