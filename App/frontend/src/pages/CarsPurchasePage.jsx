@@ -213,6 +213,7 @@ function CarsPurchasePage() {
                 <select 
                   name="car_id" 
                   // value={editData.car_id} 
+                  onChange={handleChange}
                 >
                   <option value="">Select a Car</option>
                   {dropdownOptions.cars.map((car) => (
@@ -226,7 +227,8 @@ function CarsPurchasePage() {
                 Purchase:
                 <select 
                   name="purchase_id" 
-                  // value={editData.purchase_id} 
+                  // value={editData.purchase_id}
+                  onChange={handleChange} 
                 >
                   <option value="">Select a Purchase</option>
                   {dropdownOptions.purchases.map((purchase) => (
