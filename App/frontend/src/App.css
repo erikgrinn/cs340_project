@@ -1,5 +1,13 @@
+:root {
+  --greyGreen: rgb(161, 166, 164);
+  --forestGreen: rgb(48, 64, 37);
+  --blueWhite: rgb(242, 242, 242);
+  --darkBrown: rgb(48, 64, 37);
+}
+
+
 html {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -7,4 +15,61 @@ html {
 
 html li {
   list-style-type: none;
+}
+
+body {
+  background-color: rgb(198, 136, 20, 0.4);
+  /* color: */
+}
+
+h1 {
+  
+}
+
+nav {
+  background-color: var(--greyGreen);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  flex-flow: row wrap;
+  /* border: 2px solid black; */
+}
+
+nav a {
+  color: var(--forestGreen);
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 5px;
+  border: 2px solid var(--blueWhite);
+  border-radius: 25px;
+  margin: 5px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--darkBrown);
+  text-decoration: underline;
+  background-color: var(--blueWhite);
+}
+
+a:active {
+  
+}
+a:visited {
+  
+}
+
+section {
+  
+  font-size:large;
+}
+
+.btn {
+  padding: 5px;
+  margin-top: 3px;
+}
+
+.btn:hover {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }

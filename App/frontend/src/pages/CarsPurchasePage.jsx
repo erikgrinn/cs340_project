@@ -95,6 +95,7 @@ function CarsPurchasePage() {
     e.preventDefault();
     try {
       const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${selectedCarPurchase}`;
+      console.log(selectedCarPurchase)
       await axios.delete(URL, newCarsPurchasesData);
       fetchCarsPurchasesData(); // Refresh data
     } catch (error) {
