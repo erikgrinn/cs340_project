@@ -3,7 +3,7 @@ SELECT car_id, make_model, year, price, is_used, in_stock FROM Cars;
 INSERT INTO Cars (make_model, year, price, is_used, in_stock)
 VALUES (:make_modelInput, :yearInput, :priceInput, :isUsedInput, :inStockInput);
 UPDATE Cars 
-SET make_model = :make_modelInput, year = :yearInput, price = :priceInput, is_used = :isUsedInput, in_stock = inStockInput
+SET make_model = :make_modelInput, year = :yearInput, price = :priceInput, is_used = :isUsedInput, in_stock = inStockInput;
 WHERE car_id = :carIDSelected;
 DELETE FROM Cars WHERE car_id = :carIDSelected;
 
@@ -13,7 +13,7 @@ INSERT INTO Purchases (customer_id, dealership_id, employee_id, purchase_date, q
 VALUES (:customerIDInput, :dealershipIDInput, :employeeIDInput, :purchaseDateInput, :quantityInput, :totalPriceInput);
 UPDATE Purchases 
 SET customer_id = :customerIDInput, dealership_id = :dealershipIDInput, employee_id = :employeeIDInput, 
-    purchase_date = :purchaseDateInput, quantity = :quantityInput total_price = :totalPriceInput
+    purchase_date = :purchaseDateInput, quantity = :quantityInput total_price = :totalPriceInput;
 WHERE purchase_id = :purchaseIDSelected;
 DELETE FROM Purchases WHERE purchase_id = :purchaseIDSelected;
 
@@ -21,6 +21,10 @@ DELETE FROM Purchases WHERE purchase_id = :purchaseIDSelected;
 SELECT car_purch_id, purchase_id, car_id FROM Cars_Purchases;
 INSERT INTO Cars_Purchases (purchase_id, car_id)
 VALUES (:purchaseIDInput, :carIDInput);
+UPDATE Cars_Purchases 
+SET car_id = :carIDSelected, purchase_id = purchaseIDSelected;
+WHERE car_purch_id = :carPurchIDSelected;
+DELETE FROM Cars_Purchases WHERE car_purch_id = :carPurchIDSelected;
 
 -- customers
 SELECT customer_id, first_name, last_name, email, phone_number FROM Customers;

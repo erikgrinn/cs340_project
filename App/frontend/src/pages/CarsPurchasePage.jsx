@@ -206,7 +206,39 @@ function CarsPurchasePage() {
     <>
       <h2>Cars Purchases Data</h2>
       {content}
-      <h2>Add a new Cars Purchase:</h2>
+      <h2>Add a new Cars Purchase</h2>
+      <form onSubmit={handleAddSubmit}>
+      <label>
+                Car:
+                <select 
+                  name="car_id" 
+                  // value={editData.car_id} 
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select>
+              </label><br />
+              <label>
+                Purchase:
+                <select 
+                  name="purchase_id" 
+                  // value={editData.purchase_id} 
+                >
+                  <option value="">Select a Purchase</option>
+                  {dropdownOptions.purchases.map((purchase) => (
+                    <option key={purchase.purchase_id} value={purchase.purchase_id}>
+                      {purchase.date} (ID: {purchase.purchase_id})
+                    </option>
+                  ))}
+                </select>
+              </label><br />       
+       <button type="submit">Add a Cars_Purchases</button>
+      </form>
+      {/* <h2>Add a new Cars Purchase:</h2>
       <form onSubmit={handleAddSubmit}>
       <label>
         Car_ID:
@@ -217,7 +249,7 @@ function CarsPurchasePage() {
           <input type="number" name="purchase_id" value={newCarsPurchasesData.purchase_id} onChange={handleChange} required />
         </label><br />
       <button type="submit">Add Cars_Purchases</button>
-      </form>
+      </form> */}
       
       <h2>Remove a Cars Purchase</h2>
       <form onSubmit={handleRemoveSubmit}>
