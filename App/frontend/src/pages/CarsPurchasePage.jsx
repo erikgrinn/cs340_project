@@ -136,7 +136,7 @@ function CarsPurchasePage() {
             <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
 
             {/* Update Form - Only Shows When Editing */}
-            {editData && (
+            {editData && editData.car_purch_id === carspurchases.car_purch_id && (
             <form onSubmit={handleEditSubmit}>
               <h3>Editing Car Purchase ID: {editData.car_purch_id}</h3>
 
