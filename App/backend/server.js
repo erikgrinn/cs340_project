@@ -68,40 +68,6 @@ app.get('/api/diagnostic', async (req, res) => {
     }
   });
 
-  app.get('/api/diagnostic', async (req, res) => {
-    try {
-      try {
-        await db.pool.query('DROP TABLE IF EXISTS diagnostic;');
-      } catch (dropError) {
-        console.log('Drop table error (can be ignored if table does not exist:', dropError.message);
-      }
-      
-         // Create the diagnostic table
-         try {
-          await db.pool.query('CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);');
-        } catch (createError) {
-          if (createError.code === 'ER_TABLE_EXISTS_ERROR') {
-            console.log('Table already exists, continuing...');
-          } else {
-            throw createError;
-          }
-        }
-        
-        // Insert test data
-        await db.pool.query('INSERT INTO diagnostic (text) VALUES ("MySQL is working!")');
-        
-        // Query the data
-        const [results] = await db.pool.query('SELECT * FROM diagnostic;');
-        
-        // Send results
-        res.json(results);
-      } catch (error) {
-        // Handle Errors with more details
-        console.error('Database operation failed:', error);
-        res.status(500).send('Server error: ' + error.message);
-      }
-    });  
-
   app.get('/api/setup-dealerships', async (req, res) => {
     try {
       // Check if dealerships table exists

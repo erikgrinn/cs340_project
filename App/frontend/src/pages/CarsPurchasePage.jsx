@@ -71,13 +71,13 @@ function CarsPurchasePage() {
   }
   }
 
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditData({
-      ...editData,
-      [name]: value
-    });
-  };
+  // const handleEditChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditData({
+  //     ...editData,
+  //     [name]: value
+  //   });
+  // };
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
@@ -222,7 +222,7 @@ function CarsPurchasePage() {
       <h2>Remove a Cars Purchase</h2>
       <form onSubmit={handleRemoveSubmit}>
         <select name="selectedCarPurchase" value={newCarsPurchasesData.selectedCarPurchase} onChange={handleChange} required >
-        <option value="" disabled>Select A Car Purchase</option>
+        <option value="">Select A Car Purchase</option>
         {carsPurchasesData.map((carspurchases) => (
             <option key={carspurchases.car_purch_id} value={carspurchases.car_purch_id}>
               {carspurchases.car_purch_id}
