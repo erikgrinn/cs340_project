@@ -8,6 +8,7 @@ function CarsPurchasePage() {
     car_id: 0,
     purchase_id: 0
   });
+  
   const [selectedCarPurchase, setSelectedCarPurchase] = useState('');
 
   // State for tracking the update form
@@ -47,7 +48,6 @@ function CarsPurchasePage() {
       const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases`;
       const response = await axios.get(URL);
       setcarsPurchasesData(response.data);
-      console.log(response.data)
     } catch (error) {
       console.error('Error fetching cars purchases data:', error);
       alert('Error fetching cars purchases data from the server.');
@@ -126,13 +126,21 @@ function CarsPurchasePage() {
     content = <p>No cars purchases data found.</p>;
   } else {
     content = (
+//   <ul>
+//     {carsPurchasesData.map((carspurchases) => (
+//       <li key={carspurchases.car_purch_id}>
+//         <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
+//         Purchase ID: {carspurchases.car_id}<br />
+//         Car ID: {carspurchases.purchase_id}
+//       </li>
+//     ))}
+//   </ul>
       <ul>
         {carsPurchasesData.map((carspurchases) => (
           <li key={carspurchases.car_purch_id}>
             <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
             Car ID: {carspurchases.car_id}<br />
-            Purchase ID: {carspurchases.purchase_id}
-            <br />
+            Purchase ID: {carspurchases.purchase_id}<br />
             <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
 
             {/* Update Form - Only Shows When Editing */}
@@ -194,17 +202,7 @@ function CarsPurchasePage() {
         ))}
       </ul>
     );
-    // content = (
-    //   <ul>
-    //     {carsPurchasesData.map((carspurchases) => (
-    //       <li key={carspurchases.car_purch_id}>
-    //         <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-    //         Purchase ID: {carspurchases.car_id}<br />
-    //         Car ID: {carspurchases.purchase_id}
-    //       </li>
-    //     ))}
-    //   </ul>
-    // );
+
   }
 
   return (
