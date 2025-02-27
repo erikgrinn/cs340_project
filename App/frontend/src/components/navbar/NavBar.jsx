@@ -9,7 +9,7 @@ const Navbar = () => {
           <MdLocalConvenienceStore size={80} />
         </Link>
       </div>
-      <h1>My website name</h1>
+      <h1>Benton County Dealership Service</h1>
       <nav>
         <ul>
           <li>

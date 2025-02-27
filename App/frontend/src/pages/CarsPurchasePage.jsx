@@ -8,6 +8,7 @@ function CarsPurchasePage() {
     car_id: 0,
     purchase_id: 0
   });
+  const [selectedCarPurchase, setSelectedCarPurchase] = useState('');
 
   // State for tracking the update form
   const [editData, setEditData] = useState(null); 
@@ -59,10 +60,15 @@ function CarsPurchasePage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'selectedCarPurchase') {
+      setSelectedCarPurchase(value);
+    } else {
     setNewcarsPurchases({
+      //Note: Can use prevState. Could combine in const at top?
         ...newCarsPurchasesData,
         [name]: value
     });
+  }
   }
 
   const handleEditChange = (e) => {
@@ -73,7 +79,7 @@ function CarsPurchasePage() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
       const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases`;
@@ -85,22 +91,35 @@ function CarsPurchasePage() {
     }
 }
 
-const handleEditSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${editData.car_purch_id}`;
-    await axios.put(URL, editData);
-    setEditData(null); // Hide the form after update
-    fetchCarsPurchasesData(); // Refresh data
-  } catch (error) {
-    console.error('Error updating cars purchase:', error);
-    alert('Error updating cars purchase.');
+  const handleRemoveSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${selectedCarPurchase}`;
+      await axios.delete(URL, newCarsPurchasesData);
+      fetchCarsPurchasesData(); // Refresh data
+    } catch (error) {
+      console.error('Error removing new cars purchases:', error);
+      alert('Error removing new cars purchases to the server.');
+    }
   }
-};
 
-const handleEditClick = (carspurchases) => {
-  setEditData(carspurchases); // Load data into form
-};
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${editData.car_purch_id}`;
+      await axios.put(URL, editData);
+      setEditData(null); // Hide the form after update
+      fetchCarsPurchasesData(); // Refresh data
+    } catch (error) {
+      console.error('Error updating cars purchase:', error);
+      alert('Error updating cars purchase.');
+    }
+  };
+
+  const handleEditClick = (carspurchases) => {
+    setEditData(carspurchases); // Load data into form
+  };
 
   let content;
   if (!carsPurchasesData || carsPurchasesData.length === 0) {
@@ -190,20 +209,11 @@ const handleEditClick = (carspurchases) => {
 
   return (
     <>
-      <h2>Cars Purchase Data</h2>
+      <h2>Cars Purchases Data</h2>
       {content}
-      <h2>Add a new Cars Purchase!</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Add a new Cars Purchase:</h2>
+      <form onSubmit={handleAddSubmit}>
       <label>
-        {/* Select City:
-        <select name="selectedCity" value={newDealershipData.selectedCity} onChange={handleChange} required>
-            <option value="" disabled>Select a city</option>
-            {dealershipsData.map((dealership) => (
-                <option key={dealership.dealership_id} value={dealership.city}>
-                {`ID: ${dealership.dealership_id} - City: ${dealership.city}`}
-                </option>
-            ))}
-        </select> */}
         Car_ID:
         <input type="number" name="car_id" value={newCarsPurchasesData.car_id} onChange={handleChange} required />
       </label><br />
@@ -212,6 +222,19 @@ const handleEditClick = (carspurchases) => {
           <input type="number" name="purchase_id" value={newCarsPurchasesData.purchase_id} onChange={handleChange} required />
         </label><br />
       <button type="submit">Add Cars_Purchases</button>
+      </form>
+      
+      <h2>Remove a Cars Purchase</h2>
+      <form onSubmit={handleRemoveSubmit}>
+        <select name="selectedCarPurchase" value={newCarsPurchasesData.selectedCarPurchase} onChange={handleChange} required >
+        <option value="" disabled>Select A Car Purchase</option>
+        {carsPurchasesData.map((carspurchases) => (
+            <option key={carspurchases.car_purch_id} value={carspurchases.car_purch_id}>
+              {carspurchases.car_purch_id}
+            </option>
+        ))}
+       </select>
+       <button type="submit">Remove Cars Purchases</button>
       </form>
     </>
   );

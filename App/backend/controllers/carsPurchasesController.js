@@ -65,10 +65,10 @@ const createCarsPurchases = async (req, res) => {
 //     await db.query(query, [car_id, purchase_id, id]);
 //     res.status(200).json({ message: 'Car purchase updated successfully!' });
 //   } catch (error) {
-//     console.error('Error updating car purchase:', error);
-//     res.status(500).send('Server error!');
+//     console.error("Error updating dealership:", error);
+//     res.status(500).json({ error: "Error updating dealership" });
 //   }
-// });
+// };
 const updateCarsPurchases = async (req, res) => {
   const carsPurchaseID = req.params.id;
   // Adjust these fields to match your dealerships table
@@ -91,30 +91,29 @@ const updateCarsPurchases = async (req, res) => {
   }
 };
 
-
-// // Delete dealership
-// const deleteDealership = async (req, res) => {
-//   const dealershipID = req.params.id;
+// Delete Cars Purchase
+const deleteCarsPurchases = async (req, res) => {
+  const carsPurchaseID = req.params.id;
   
-//   try {
-//     const query = "DELETE FROM Dealerships WHERE id = ?";
-//     const [result] = await db.pool.query(query, [dealershipID]);
+  try {
+    const query = "DELETE FROM Cars_Purchases WHERE car_purch_id = ?";
+    const [result] = await db.pool.query(query, [carsPurchaseID]);
     
-//     if (result.affectedRows === 0) {
-//       return res.status(404).json({ error: "Dealership not found" });
-//     }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Cars Purchase not found" });
+    }
     
-//     res.status(204).send();
-//   } catch (error) {
-//     console.error("Error deleting dealership:", error);
-//     res.status(500).json({ error: "Error deleting dealership" });
-//   }
-// };
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting Cars Purchase:", error);
+    res.status(500).json({ error: "Error deleting Cars Purchase" });
+  }
+};
 
 module.exports = {
   getCarsPurchases,
   getCarsPurchaseByID,
   createCarsPurchases,
   updateCarsPurchases,
-  // deleteDealership,
+  deleteCarsPurchases,
 };
