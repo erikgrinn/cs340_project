@@ -11,7 +11,6 @@ function CarsPurchasePage() {
   
   const [selectedCarPurchase, setSelectedCarPurchase] = useState('');
 
-  // State for tracking the update form
   const [editData, setEditData] = useState(null); 
   const [dropdownOptions, setDropdownOptions] = useState({
     cars: [],
@@ -20,7 +19,7 @@ function CarsPurchasePage() {
 
   const fetchDropdownOptions = async () => {
     try {
-      const carsURL = `${import.meta.env.VITE_API_URL}/api/cars`; // Adjust API URL
+      const carsURL = `${import.meta.env.VITE_API_URL}/api/cars`; 
       const purchasesURL = `${import.meta.env.VITE_API_URL}/api/purchases`;
   
       const [carsResponse, purchasesResponse] = await Promise.all([
@@ -32,6 +31,7 @@ function CarsPurchasePage() {
         cars: carsResponse.data,
         purchases: purchasesResponse.data
       });
+      console.log(cars, purchaes)
     } catch (error) {
       console.error("Error fetching dropdown options:", error);
     }
@@ -127,15 +127,6 @@ function CarsPurchasePage() {
     content = <p>No cars purchases data found.</p>;
   } else {
     content = (
-//   <ul>
-//     {carsPurchasesData.map((carspurchases) => (
-//       <li key={carspurchases.car_purch_id}>
-//         <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-//         Purchase ID: {carspurchases.car_id}<br />
-//         Car ID: {carspurchases.purchase_id}
-//       </li>
-//     ))}
-//   </ul>
       <ul>
         {carsPurchasesData.map((carspurchases) => (
           <li key={carspurchases.car_purch_id}>
@@ -145,7 +136,7 @@ function CarsPurchasePage() {
             <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
 
             {/* Update Form - Only Shows When Editing */}
-            {/* {editData && (
+            {editData && (
             <form onSubmit={handleEditSubmit}>
               <h3>Editing Car Purchase ID: {editData.car_purch_id}</h3>
 
@@ -184,8 +175,13 @@ function CarsPurchasePage() {
               <button type="submit">Update</button>
               <button type="button" onClick={() => setEditData(null)}>Cancel</button>
             </form>
-          )} */}
-            {editData && editData.car_purch_id === carspurchases.car_purch_id && (
+                        )}
+                        </li>
+                      ))}
+                    </ul>
+                );
+          }
+            {/* {editData && editData.car_purch_id === carspurchases.car_purch_id && (
               <form onSubmit={handleEditSubmit}>
                 <label>
                   Car ID:
@@ -204,7 +200,7 @@ function CarsPurchasePage() {
       </ul>
     );
 
-  }
+  } */}
 
   return (
     <>
