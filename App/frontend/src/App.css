@@ -22,8 +22,14 @@ body {
   /* color: */
 }
 
+h1, h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
 h1 {
-  
+  border-bottom: 1px solid #280707;
+  padding-bottom: 10px;
 }
 
 nav {
@@ -31,7 +37,7 @@ nav {
   border-radius: 5px;
   display: flex;
   justify-content: space-around;
-  padding: 5px;
+  padding: 10px;
   flex-flow: row wrap;
   /* border: 2px solid black; */
 }
@@ -60,6 +66,10 @@ a:visited {
   
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 section {
   
   font-size:large;
@@ -72,4 +82,72 @@ section {
 
 .btn:hover {
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+form {
+  background-color: var(--greyGreen);
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
+legend {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+fieldset {
+ 
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+select {
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.cars-purchases-container {
+  
+}
+
+.cars-purchases-container h2{
+  margin-bottom: 20px;
+}
+
+.cars-purchases-container button{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.cars-purchases-container form fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#removeCarPurchase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
 }

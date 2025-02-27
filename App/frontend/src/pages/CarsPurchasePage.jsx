@@ -61,13 +61,16 @@ function CarsPurchasePage() {
   }, []);
 
   const handleChange = (e) => {
+    // Gets name and value
     const { name, value } = e.target;
+    // If from the remove form, i.e. has changed, calls setSelectedCarPurchase to update the value
     if (name === 'selectedCarPurchase') {
       setSelectedCarPurchase(value);
     } else {
     setNewcarsPurchases({
       //Note: Can use prevState. Could combine in const at top?
         ...newCarsPurchasesData,
+        // name can be anything, car_id, purchase_id, whatever it's set to
         [name]: value
     });
   }
@@ -222,6 +225,7 @@ function CarsPurchasePage() {
               onChange={handleChange}
               required>
                 <option value="">Select a Car</option>
+                {/* Car is a parameter name, could be anything. Taking each car object from cars array in dropdownOptions object */}
                 {dropdownOptions.cars.map((car) => (
                   <option key={car.car_id} value={car.car_id}>
                      {car.make_model} (ID: {car.car_id})
@@ -232,32 +236,37 @@ function CarsPurchasePage() {
             </label>
             <label>
           Purchase_ID:
-          </label>
+          
           <select name="purchase_id" value={newCarsPurchasesData.purchase_id} onChange={handleChange} required >
           <option value="">Select a Purchase</option>
+          {/* Purchases is a parameter name. */}
           {dropdownOptions.purchases.map((purchases) => (
             <option key={purchases.purchase_id} value={purchases.purchase_id}>
               (ID: {purchases.purchase_id})
             </option>
           ))}
           </select>
+          </label>
       <button className="btn" type="submit">Add Cars_Purchases</button>
           </fieldset>
         </form>
       </div>
      
       
-      <h2>Remove a Cars Purchase</h2>
-      <form onSubmit={handleRemoveSubmit}>
-        <select name="selectedCarPurchase" value={newCarsPurchasesData.selectedCarPurchase} onChange={handleChange} required >
+      <h2>Remove a Cars Purchase:</h2>
+      <form id="removeCarPurchase" onSubmit={handleRemoveSubmit}>
+        <select name="selectedCarPurchase" value={selectedCarPurchase} onChange={handleChange} required >
         <option value="">Select A Car Purchase</option>
-        {carsPurchasesData.map((carspurchases) => (
-            <option key={carspurchases.car_purch_id} value={carspurchases.car_purch_id}>
-              {carspurchases.car_purch_id}
+        {carsPurchasesData.map((carsPurchases) => (
+          // Get car_purch_id from current object (carsPurchases - being processed in map function, one of the items in the carsPurchasesData array)
+            <option key={carsPurchases.car_purch_id} value={carsPurchases.car_purch_id}>
+              {carsPurchases.car_purch_id}
             </option>
         ))}
        </select>
-       <button type="submit">Remove Cars Purchases</button>
+       <button className="btn" type="submit">Remove Cars Purchases</button>
+       <button className="btn" type="button" onClick={() => setNewcarsPurchases({ car_id: 0, purchase_id: 0})}
+       >Cancel</button>
       </form>
       </div>
     </>
