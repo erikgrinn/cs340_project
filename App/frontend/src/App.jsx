@@ -7,6 +7,7 @@ import CarsPurchasePage from "./pages/CarsPurchasePage";
 import Navbar from "./components/navbar/NavBar";
 import Header from "./components/header";
 import CustomersPage from "./pages/CustomersPage";
+import CarsPage from "./pages/CarsPage";
 
 function App() {
   return (
@@ -38,10 +39,10 @@ function App() {
             <CustomersPage />
           </>
           } />
-          <Route path="/" element={
+          <Route path="/cars" element={
           <>
-          <Header title="Index" />
-          <HomePage />
+          <Header title="Cars" />
+          <CarsPage />
           </>
           } />
       </Routes>

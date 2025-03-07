@@ -40,10 +40,26 @@ const getCarByID = async (req, res) => {
   }
 };
 
+
+// Create new Car
+const createCar = async (req, res) => {
+  try {
+    const { dealership_id, make_model, color, price, year, is_used, in_stock } = req.body;
+    const test = req.params
+    const query = "INSERT INTO Cars (dealership_id, make_model, color, price, year, is_used, in_stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    const response = await db.pool.query(query, [dealership_id, make_model, color, price, year, is_used, in_stock]);
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error creating car:", error);
+    res.status(500).json({ error: "Error creating car" });
+  }
+};
+
 module.exports = {
     getCars,
     getCarByID,
-    // createCarsPurchases,
+    createCar,
     // updateCarsPurchases,
     // deleteCarsPurchases,
   };
