@@ -8,6 +8,7 @@ import Navbar from "./components/navbar/NavBar";
 import Header from "./components/header";
 import CustomersPage from "./pages/CustomersPage";
 import CarsPage from "./pages/CarsPage";
+import PurchasePage from "./pages/PurchasePage";
 
 function App() {
   return (
@@ -43,6 +44,12 @@ function App() {
           <>
           <Header title="Cars" />
           <CarsPage />
+          </>
+          } />
+           <Route path="/purchases" element={
+          <>
+          <Header title="Purchases" />
+          <PurchasePage />
           </>
           } />
       </Routes>

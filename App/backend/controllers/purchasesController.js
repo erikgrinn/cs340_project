@@ -40,10 +40,24 @@ const getPurchaseByID = async (req, res) => {
   }
 };
 
+// Create new purchase
+const createPurchase = async (req, res) => {
+  try {
+    const { customer_id, employee_id, total_price, quantity, purchase_date } = req.body;
+    const query = "INSERT INTO Purchases (customer_id, employee_id, total_price, quantity, purchase_date) VALUES (?, ?, ?, ?, ?)";
+    
+    const response = await db.pool.query(query, [customer_id, employee_id, total_price, quantity, purchase_date]);
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error creating purchase:", error);
+    res.status(500).json({ error: "Error creating purchase" });
+  }
+};
+
 module.exports = {
     getPurchases,
     getPurchaseByID,
-    // createCarsPurchases,
+    createPurchase,
     // updateCarsPurchases,
     // deleteCarsPurchases,
   };
