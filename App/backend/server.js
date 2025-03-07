@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+// Server.js defines API routes. Each route handled by specific router file.
+
 const app = express();
 const PORT = process.env.PORT || 8500;
 
@@ -20,6 +22,9 @@ app.use("/api/dealerships", require("./routes/dealershipsRoutes"));
 app.use("/api/carspurchases", require("./routes/carsPurchasesRoutes.js"))
 app.use("/api/cars", require("./routes/carsRoutes.js"))
 app.use("/api/purchases", require("./routes/purchasesRoutes.js"))
+// Tells Express: For any request /api/customers, use router defined in customerRoutes.js. Also defines base user path api/customers.
+app.use("/api/customers", require("./routes/customersRoutes"))
+console.log("Registered /api/customers route");
 
 // Add your Connect DB Activitiy Code Below:
 // ...

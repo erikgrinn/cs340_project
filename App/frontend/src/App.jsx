@@ -6,6 +6,7 @@ import DealershipPage from "./pages/DealershipPage";
 import CarsPurchasePage from "./pages/CarsPurchasePage";
 import Navbar from "./components/navbar/NavBar";
 import Header from "./components/header";
+import CustomersPage from "./pages/CustomersPage";
 
 function App() {
   return (
@@ -31,10 +32,10 @@ function App() {
             <CarsPurchasePage />
           </>
           } />
-          <Route path="/" element={
+          <Route path="/customers" element={
           <>
-          <Header title="Index" />
-          <HomePage />
+            <Header title="Customers" />
+            <CustomersPage />
           </>
           } />
           <Route path="/" element={
