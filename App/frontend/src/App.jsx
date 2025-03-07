@@ -9,6 +9,7 @@ import Header from "./components/header";
 import CustomersPage from "./pages/CustomersPage";
 import CarsPage from "./pages/CarsPage";
 import PurchasePage from "./pages/PurchasePage";
+import EmployeesPage from "./pages/EmployeesPage";
 
 function App() {
   return (
@@ -50,6 +51,12 @@ function App() {
           <>
           <Header title="Purchases" />
           <PurchasePage />
+          </>
+          } />
+             <Route path="/employees" element={
+          <>
+          <Header title="Employees" />
+          <EmployeesPage />
           </>
           } />
       </Routes>

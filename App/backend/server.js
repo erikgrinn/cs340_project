@@ -24,6 +24,7 @@ app.use("/api/cars", require("./routes/carsRoutes.js"))
 app.use("/api/purchases", require("./routes/purchasesRoutes.js"))
 // Tells Express: For any request /api/customers, use router defined in customerRoutes.js. Also defines base user path api/customers.
 app.use("/api/customers", require("./routes/customersRoutes"))
+app.use("/api/employees", require("./routes/employeesRoutes"))
 console.log("Registered /api/customers route");
 
 // Add your Connect DB Activitiy Code Below:
