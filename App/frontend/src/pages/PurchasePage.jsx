@@ -44,12 +44,20 @@ function PurchasePage() {
       const URL = `${import.meta.env.VITE_API_URL}/api/purchases`;
 
       // Convert empty strings to null before sending for nullable employee_id
-      const sanitizedData = Object.fromEntries(
-        Object.entries(newPurchaseData).map(([key, value]) => [
-          key,
-          value === "" ? null : value,
-        ])
-      );
+      // const sanitizedData = Object.fromEntries(
+      //   Object.entries(newPurchaseData).map(([key, value]) => [
+      //     key,
+      //     value === "" ? null : value,
+      //   ])
+      // );
+      
+      // another way 
+      const sanitizedData = { ...newPurchaseData };
+      for (let key in sanitizedData) {
+        if (sanitizedData[key] === "") {
+          sanitizedData[key] = null;
+        }
+      }
 
       await axios.post(URL, sanitizedData);
       fetchPurchasesData(); // Refresh data
