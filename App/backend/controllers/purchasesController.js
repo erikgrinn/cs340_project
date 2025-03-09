@@ -54,10 +54,36 @@ const createPurchase = async (req, res) => {
   }
 };
 
+const updatePurchase = async (req, res) => {
+  const purchaseID = req.params.id;
+  // customer_id: '',
+  //   employee_id: '',
+  //   total_price: '',
+  //   quantity: '',
+  //   purchase_date: ''
+  const { purchase_id, customer_id, employee_id, total_price, quantity, purchase_date } = req.body;
+  
+  try {
+    const query = "UPDATE Purchases SET customer_id=?, employee_id=?, total_price=?, quantity=?, purchase_date=? WHERE purchase_id=?";
+    const values = [customer_id, employee_id, total_price, quantity, purchase_date, purchaseID];
+    
+    const [result] = await db.pool.query(query, values);
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Purchase not found" });
+    }
+    
+    res.json({ message: "Purchase updated successfully" });
+  } catch (error) {
+    console.error("Error updating purchase:", error);
+    res.status(500).json({ error: "Error updating Purchase" });
+  }
+};
+
 module.exports = {
     getPurchases,
     getPurchaseByID,
     createPurchase,
-    // updateCarsPurchases,
-    // deleteCarsPurchases,
+    updatePurchase,
+    // deletePurchase,
   };

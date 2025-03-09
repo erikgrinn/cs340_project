@@ -180,12 +180,12 @@ function CarsPurchasePage() {
               <button type="submit">Update</button>
               <button type="button" onClick={() => setEditData(null)}>Cancel</button>
             </form>
-                        )}
-                        </li>
-                      ))}
-                    </ul>
-                );
-          }
+          )}
+          </li>
+        ))}
+      </ul>
+      );
+    }
             {/* {editData && editData.car_purch_id === carspurchases.car_purch_id && (
               <form onSubmit={handleEditSubmit}>
                 <label>

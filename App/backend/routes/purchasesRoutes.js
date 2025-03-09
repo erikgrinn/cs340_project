@@ -4,14 +4,14 @@ const {
   getPurchases,
   getPurchaseByID,
   createPurchase,
-//   updateCar,
-//   deleteCar,
+  updatePurchase,
+//   deletePurchase,
 } = require("../controllers/purchasesController");
 
 router.get("/", getPurchases);
 router.get("/:id", getPurchaseByID);
 router.post("/", createPurchase);
-// router.put("/:id", updateCar);
-// router.delete("/:id", deleteCar);
+router.put("/:id", updatePurchase);
+// router.delete("/:id", deletePurchase);
 
 module.exports = router;

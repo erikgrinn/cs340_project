@@ -14,6 +14,9 @@ function PurchasePage() {
     purchase_date: ''
   });
 
+  const [editData, setEditData] = useState(null); 
+
+
   const fetchPurchasesData = async () => {
     try {
       // Construct the URL for the API call
@@ -38,7 +41,7 @@ function PurchasePage() {
     });
   }
 
-  const handleSubmit = async (e) => {
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
       const URL = `${import.meta.env.VITE_API_URL}/api/purchases`;
@@ -50,7 +53,7 @@ function PurchasePage() {
       //     value === "" ? null : value,
       //   ])
       // );
-      
+
       // another way 
       const sanitizedData = { ...newPurchaseData };
       for (let key in sanitizedData) {
@@ -67,6 +70,23 @@ function PurchasePage() {
     }
 }
 
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const URL = `${import.meta.env.VITE_API_URL}/api/purchases/${editData.purchase_id}`;
+      await axios.put(URL, editData);
+      setEditData(null); // Hide the form after update
+      fetchPurchasesData(); // Refresh data
+    } catch (error) {
+      console.error('Error updating purchase:', error);
+      alert('Error updating purchase.');
+    }
+  };
+
+  const handleEditClick = (purchase) => {
+    setEditData(purchase); // Load data into form
+  };
+
   let content;
   if (!purchasesData || purchasesData.length === 0) {
     content = <p>No purchase data found.</p>;
@@ -80,6 +100,103 @@ function PurchasePage() {
             Total Price: {purchase.total_price}
             Quantity: {purchase.quantity}
             Purchase Date: {purchase.purchase_date}
+            <button onClick={() => handleEditClick(purchase)}>Edit</button>
+
+          {/* Update Form - Only Shows When Editing */}
+          {editData && editData.purchase_id === purchase.purchase_id && (
+            <form onSubmit={handleEditSubmit}>
+              <h3>Editing Purchase ID: {editData.purchase_id}</h3>
+
+              {/* <label>
+                Customer:
+                <input type="number" name="customer_id" value={editData.customer_id} onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })} required /> */}
+                {/* <select 
+                  name="customer_id" 
+                  value={editData.customer_id} 
+                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select> */}
+              {/* </label><br /> */}
+
+              <label>
+                Employee:
+                <input type="number" name="employee_id" value={editData.employee_id} onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })} />
+                {/* <select 
+                  name="customer_id" 
+                  value={editData.customer_id} 
+                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select> */}
+              </label><br />
+
+              {/* <label>
+                Total Price:
+                <input type="number" name="total_price" value={editData.total_price} onChange={(e) => setEditData({ ...editData, total_price: e.target.value })} required /> */}
+                {/* <select 
+                  name="customer_id" 
+                  value={editData.customer_id} 
+                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select> */}
+              {/* </label><br /> */}
+
+              {/* <label>
+                Quantity:
+                <input type="number" name="quantity" value={editData.quantity} onChange={(e) => setEditData({ ...editData, quantity: e.target.value })} required /> */}
+                {/* <select 
+                  name="customer_id" 
+                  value={editData.customer_id} 
+                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select> */}
+              {/* </label><br /> */}
+
+              {/* <label>
+                Purchase Date:
+                <input type="date" name="purchase_date" value={editData.purchase_date} onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })} required /> */}
+                {/* <select 
+                  name="customer_id" 
+                  value={editData.customer_id} 
+                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                >
+                  <option value="">Select a Car</option>
+                  {dropdownOptions.cars.map((car) => (
+                    <option key={car.car_id} value={car.car_id}>
+                      {car.model} (ID: {car.car_id})
+                    </option>
+                  ))}
+                </select> */}
+              {/* </label><br /> */}
+
+
+              <button type="submit">Update</button>
+              <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+            </form>
+          )}
           </li>
         ))}
       </ul>
@@ -91,7 +208,7 @@ function PurchasePage() {
       <h2>Purchase Data</h2>
       {content}
       <h2>Add a new purchase:</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleAddSubmit}>
       <label>
         Customer ID:
         <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required />
