@@ -27,7 +27,7 @@ const getPurchaseByID = async (req, res) => {
   try {
     const purchaseID = req.params.id;
     const query = "SELECT * FROM Purchases WHERE id = ?";
-    const [result] = await db.pool.query(query, [carID]);
+    const [result] = await db.pool.query(query, [purchaseID]);
     
     if (result.length === 0) {
       return res.status(404).json({ error: "Purchase not found" });
