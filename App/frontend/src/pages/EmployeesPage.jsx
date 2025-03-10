@@ -14,6 +14,11 @@ function EmployeesPage() {
     phone_number: ''
   });
 
+  const [dropdownOptions, setDropdownOptions] = useState({
+    employees: [],
+    dealerships: []
+  });
+
   const fetchEmployeesData = async () => {
     try {
       // Construct the URL for the API call
@@ -26,8 +31,28 @@ function EmployeesPage() {
     }
   };
 
+  const fetchDropdownOptions = async () => {
+    try {
+      const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`; 
+      const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
+  
+      const [employeesResponse, dealershipsResponse] = await Promise.all([
+        axios.get(employeesURL),
+        axios.get(dealershipsURL)
+      ]);
+  
+      setDropdownOptions({
+        employees: employeesResponse.data,
+        dealerships: dealershipsResponse.data
+      });
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+
   useEffect(() => {
     fetchEmployeesData();
+    fetchDropdownOptions();
   }, []);
 
   const handleChange = (e) => {
@@ -73,10 +98,19 @@ function EmployeesPage() {
       <h2>Employee Data</h2>
       {content}
       <h2>Add a new Employee:</h2>
-      <form onSubmit={handleSubmit}>
-      <label>
-        Dealership ID:
-        <input type="number" name="dealership_id" value={newEmployeeData.dealership_id} onChange={handleChange} required />
+      <form id="addEmployee" onSubmit={handleSubmit}>
+      <label>Dealership ID:
+        <select
+          name="dealership_id" 
+          value={newEmployeeData.dealership_id} 
+          onChange={handleChange} required >
+            <option value="">Select a Dealership</option>
+            {dropdownOptions.dealerships.map((dealership) => (
+              <option key={dealership.dealership_id} value={dealership.dealership_id}>
+                {dealership.city} (ID: {dealership.dealership_id})
+              </option>
+            ))}
+            </select>
       </label><br />
         <label>
           Email:
