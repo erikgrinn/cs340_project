@@ -16,6 +16,10 @@ function CarsPage() {
     in_stock: ''
   });
 
+  const [dropdownOptions, setDropdownOptions] = useState({
+    dealerships: []
+  })
+
   const fetchCarsData = async () => {
     try {
       // Construct the URL for the API call
@@ -28,8 +32,25 @@ function CarsPage() {
     }
   };
 
+  const fetchDropdownOptions = async () => {
+    try {
+      const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`; 
+  
+      const [dealershipsResponse] = await Promise.all([
+        axios.get(dealershipsURL),
+      ]);
+  
+      setDropdownOptions({
+        dealerships: dealershipsResponse.data,
+      });
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCarsData();
+    fetchDropdownOptions();
   }, []);
 
   const handleChange = (e) => {
@@ -78,10 +99,17 @@ function CarsPage() {
       <h2>Car Data</h2>
       {content}
       <h2>Add a new car!</h2>
-      <form onSubmit={handleSubmit}>
+      <form id="addCar" onSubmit={handleSubmit}>
       <label>
         Dealership ID:
-        <input type="number" name="dealership_id" value={newCarData.dealership_id} onChange={handleChange} required />
+        <select name="dealership_id" value={newCarData.dealership_id} onChange={handleChange} required >
+          <option value="">Select a Dealership</option>
+          {dropdownOptions.dealerships.map((dealership) => (
+            <option key={dealership.dealership_id} value={dealership.dealership_id}>
+              {dealership.city} (ID: {dealership.dealership_id})
+            </option>
+          ))}
+        </select> 
       </label><br />
         <label>
           Make & Model:
