@@ -247,7 +247,7 @@ function PurchasePage() {
         <select 
               name="customer_id" 
               value={newPurchaseData.customer_id} 
-              onChange={handleChange}
+              onChange={handleChange} required
             >
               <option value="" disabled>Select a customer</option>
               console.log(dropdownOptions.customers)
