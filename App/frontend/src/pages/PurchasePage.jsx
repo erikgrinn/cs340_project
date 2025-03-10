@@ -15,7 +15,10 @@ function PurchasePage() {
   });
 
   const [editData, setEditData] = useState(null); 
-
+  const [dropdownOptions, setDropdownOptions] = useState({
+    customers: [],
+    employees: []
+  });
 
   const fetchPurchasesData = async () => {
     try {
@@ -29,8 +32,28 @@ function PurchasePage() {
     }
   };
 
+  const fetchDropdownOptions = async () => {
+    try {
+      const customersURL = `${import.meta.env.VITE_API_URL}/api/customers`;
+      const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`;
+  
+      const [customersResponse, employeesResponse] = await Promise.all([
+        axios.get(customersURL),
+        axios.get(employeesURL)
+      ]);
+  
+      setDropdownOptions({
+        customers: customersResponse.data,
+        employees: employeesResponse.data
+      });
+    } catch (error) {
+      console.error("Error fetching dropdown options:", error);
+    }
+  };
+
   useEffect(() => {
     fetchPurchasesData();
+    fetchDropdownOptions(); // Fetch dropdown options on load
   }, []);
 
   const handleChange = (e) => {
@@ -57,11 +80,13 @@ function PurchasePage() {
       // another way 
       const sanitizedData = { ...newPurchaseData };
       for (let key in sanitizedData) {
-        if (sanitizedData[key] === "") {
+        if (sanitizedData[key] === "null") {
           sanitizedData[key] = null;
         }
       }
-
+      
+      console.log(sanitizedData)
+      
       await axios.post(URL, sanitizedData);
       fetchPurchasesData(); // Refresh data
     } catch (error) {
@@ -77,7 +102,7 @@ function PurchasePage() {
 
       const sanitizedEditData = { ...editData };
       for (let key in sanitizedEditData) {
-        if (sanitizedEditData[key] === "") {
+        if (sanitizedEditData[key] === "null") {
           sanitizedEditData[key] = null;
         }
       }
@@ -133,19 +158,20 @@ function PurchasePage() {
 
               <label>
                 Employee:
-                <input type="number" name="employee_id" value={editData.employee_id} onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })} />
-                {/* <select 
-                  name="customer_id" 
-                  value={editData.customer_id} 
-                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                {/* <input type="number" name="employee_id" value={editData.employee_id} onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })} /> */}
+                <select 
+                  name="employee_id" 
+                  value={editData.employee_id} 
+                  onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
                 >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
+                  <option value="null">Select an employee</option>
+                  <option value="null">No Employee</option>
+                  {dropdownOptions.employees.map((employee) => (
+                    <option key={employee.employee_id} value={employee.employee_id}>
+                      {employee.first_name} (ID: {employee.employee_id})
                     </option>
                   ))}
-                </select> */}
+                </select>
               </label><br />
 
               {/* <label>
@@ -218,11 +244,38 @@ function PurchasePage() {
       <form onSubmit={handleAddSubmit}>
       <label>
         Customer ID:
-        <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required />
+        <select 
+              name="customer_id" 
+              value={newPurchaseData.customer_id} 
+              onChange={handleChange} required
+            >
+              <option value="" disabled>Select a customer</option>
+              console.log(dropdownOptions.customers)
+              {dropdownOptions.customers.map((customer) => (
+                <option key={customer.customer_id} value={customer.customer_id}>
+                  {customer.first_name} (ID: {customer.customer_id})
+                </option>
+              ))}
+          </select>
+        {/* <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required /> */}
       </label><br />
         <label>
           Employee ID:
-          <input type="text" name="employee_id" value={newPurchaseData.employee_id} onChange={handleChange} />
+          <select 
+              name="employee_id" 
+              value={newPurchaseData.employee_id} 
+              onChange={handleChange}
+            >
+              <option value="" disabled>Select an employee</option>
+              <option value="null">No Employee</option>
+              console.log(dropdownOptions.employees)
+              {dropdownOptions.employees.map((employee) => (
+                <option key={employee.employee_id} value={employee.employee_id}>
+                  {employee.first_name} (ID: {employee.employee_id})
+                </option>
+              ))}
+          </select>
+          {/* <input type="text" name="employee_id" value={newPurchaseData.employee_id} onChange={handleChange} /> */}
         </label><br />
         <label>
           Total Price:
