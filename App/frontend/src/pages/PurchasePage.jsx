@@ -244,20 +244,20 @@ function PurchasePage() {
       <form onSubmit={handleAddSubmit}>
       <label>
         Customer ID:
-        {/* <select 
+        <select 
               name="customer_id" 
               value={newPurchaseData.customer_id} 
               onChange={handleChange}
             >
-              <option value="">Select a customer</option>
+              <option value="" disabled>Select a customer</option>
               console.log(dropdownOptions.customers)
               {dropdownOptions.customers.map((customer) => (
                 <option key={customer.customer_id} value={customer.customer_id}>
                   {customer.first_name} (ID: {customer.customer_id})
                 </option>
               ))}
-          </select> */}
-        <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required />
+          </select>
+        {/* <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required /> */}
       </label><br />
         <label>
           Employee ID:
@@ -266,7 +266,7 @@ function PurchasePage() {
               value={newPurchaseData.employee_id} 
               onChange={handleChange}
             >
-              <option value="null">Select an employee</option>
+              <option value="" disabled>Select an employee</option>
               <option value="null">No Employee</option>
               console.log(dropdownOptions.employees)
               {dropdownOptions.employees.map((employee) => (
