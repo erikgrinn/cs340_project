@@ -85,8 +85,8 @@ function EmployeesPage() {
           <li key={employee.Employee_id}>
             <strong>{`Employee ID: ${employee.employee_id} - Dealership ID: ${employee.dealership_id}`}</strong><br />
             Email: {employee.email}<br />
-            {`Name: ${employee.first_name} ${employee.last_name}`}
-            Phone Number: {employee.phone_number}
+            {`Name: ${employee.first_name} ${employee.last_name}`}<br />
+            Phone Number: {employee.phone_number}<br />
           </li>
         ))}
       </ul>

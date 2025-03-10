@@ -104,9 +104,9 @@ function PurchasePage() {
           <li key={purchase.purchase_id}>
             <strong>{`Purchase ID: ${purchase.purchase_id} - Customer ID: ${purchase.customer_id}`}</strong><br />
             Employee ID: {purchase.employee_id}<br />
-            Total Price: {purchase.total_price}
-            Quantity: {purchase.quantity}
-            Purchase Date: {purchase.purchase_date}
+            Total Price: {purchase.total_price}<br />
+            Quantity: {purchase.quantity}<br />
+            Purchase Date: {new Date(purchase.purchase_date).toLocaleDateString()}<br />
             <button onClick={() => handleEditClick(purchase)}>Edit</button>
 
           {/* Update Form - Only Shows When Editing */}

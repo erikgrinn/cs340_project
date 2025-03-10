@@ -83,11 +83,11 @@ function CarsPage() {
           <li key={car.car_id}>
             <strong>{`Car ID: ${car.car_id} - Dealership ID: ${car.dealership_id}`}</strong><br />
             Make & Model: {car.make_model}<br />
-            Color: {car.color}
-            Price: {car.price}
-            Year: {car.year}
-            Used or Not: {car.is_used}
-            In Stock: {car.in_stock}
+            Color: {car.color}<br />
+            Price: {car.price}<br />
+            Year: {car.year}<br />
+            Used or Not: {car.is_used}<br />
+            In Stock: {car.in_stock}<br />
           </li>
         ))}
       </ul>
