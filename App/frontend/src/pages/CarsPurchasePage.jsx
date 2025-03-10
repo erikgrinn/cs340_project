@@ -129,20 +129,22 @@ function CarsPurchasePage() {
   };
 
 
-  // add code for car.make_model for corresponding car_id in carspurchases - in content vs in return
-  {/* const car = dropdownOptions.cars.find(car => car.car_id === carspurchases.car_id);
-  const makeModel = car ? car.make_model : 'Unknown';
-  {makeModel} */}
   let content;
   if (!carsPurchasesData || carsPurchasesData.length === 0) {
     content = <p>No cars purchases data found.</p>;
   } else {
     content = (
       <ul>
-        {carsPurchasesData.map((carspurchases) => (
+        {/* if returning JSX, use ( for cleaner, shorter code.
+        if need to define variables or logic before returning JSX, use {} and explicitly return. */}
+        {carsPurchasesData.map((carspurchases) => {
+        // Find the corresponding car
+        const car = dropdownOptions.cars.find(car => car.car_id === carspurchases.car_id);
+        const makeModel = car ? car.make_model : 'Unknown';
+        return (
           <li key={carspurchases.car_purch_id}>
             <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-            Car ID: {carspurchases.car_id}<br />
+            Car ID: {carspurchases.car_id} {makeModel}<br />
             Purchase ID: {carspurchases.purchase_id}<br />
             <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
 
@@ -188,7 +190,8 @@ function CarsPurchasePage() {
             </form>
           )}
           </li>
-        ))}
+        )
+  })}
       </ul>
       );
     }
