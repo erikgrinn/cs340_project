@@ -6,7 +6,7 @@ function CarsPurchasePage() {
   // All relationships in DB. Properties: car_purch_id, car_id, purchase_id
   const [carsPurchasesData, setcarsPurchasesData] = useState([]);
   // For a new car, set car_id and purchase_id, used in Add form
-  const [newCarsPurchasesData, setNewcarsPurchases] = useState({
+  const [newCarsPurchasesData, setNewCarsPurchases] = useState({
     car_id: 0,
     purchase_id: 0
   });
@@ -56,9 +56,10 @@ function CarsPurchasePage() {
     }
   };
 
-  useEffect(() => {
-    fetchCarsPurchasesData();
-  }, []);
+  // ** redundant
+  // useEffect(() => {
+  //   fetchCarsPurchasesData();
+  // }, []);
 
   const handleChange = (e) => {
     // Gets name and value
@@ -67,7 +68,7 @@ function CarsPurchasePage() {
     if (name === 'selectedCarPurchase') {
       setSelectedCarPurchase(value);
     } else {
-    setNewcarsPurchases({
+    setNewCarsPurchases({
       //Note: Can use prevState. Could combine in const at top?
         ...newCarsPurchasesData,
         // name can be anything, car_id, purchase_id, whatever it's set to
@@ -265,7 +266,7 @@ function CarsPurchasePage() {
         ))}
        </select>
        <button className="btn" type="submit">Remove Cars Purchases</button>
-       <button className="btn" type="button" onClick={() => setNewcarsPurchases({ car_id: 0, purchase_id: 0})}
+       <button className="btn" type="button" onClick={() => setNewCarsPurchases({ car_id: 0, purchase_id: 0})}
        >Cancel</button>
       </form>
       </div>
