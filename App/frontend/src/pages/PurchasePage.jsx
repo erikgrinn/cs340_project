@@ -74,7 +74,14 @@ function PurchasePage() {
     e.preventDefault();
     try {
       const URL = `${import.meta.env.VITE_API_URL}/api/purchases/${editData.purchase_id}`;
-      await axios.put(URL, editData);
+
+      const sanitizedEditData = { ...editData };
+      for (let key in sanitizedEditData) {
+        if (sanitizedEditData[key] === "") {
+          sanitizedEditData[key] = null;
+        }
+      }
+      await axios.put(URL, sanitizedEditData);
       setEditData(null); // Hide the form after update
       fetchPurchasesData(); // Refresh data
     } catch (error) {
