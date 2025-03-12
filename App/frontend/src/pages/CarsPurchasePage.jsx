@@ -191,30 +191,11 @@ function CarsPurchasePage() {
           )}
           </li>
         )
-  })}
+        })}
       </ul>
       );
     }
-            {/* {editData && editData.car_purch_id === carspurchases.car_purch_id && (
-              <form onSubmit={handleEditSubmit}>
-                <label>
-                  Car ID:
-                  <input type="number" name="car_id" value={editData.car_id} onChange={handleEditChange} required />
-                </label><br />
-                <label>
-                  Purchase ID:
-                  <input type="number" name="purchase_id" value={editData.purchase_id} onChange={handleEditChange} required />
-                </label><br />
-                <button type="submit">Update</button>
-                <button type="button" onClick={() => setEditData(null)}>Cancel</button>
-              </form>
-            )}
-          </li>
-        ))}
-      </ul>
-    );
 
-  } */}
 
   return (
     <>
