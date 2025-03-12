@@ -179,52 +179,16 @@ function PurchasePage() {
               <label>
                 Total Price:
                 <input type="number" name="total_price" value={editData.total_price} onChange={(e) => setEditData({ ...editData, total_price: e.target.value })} required />
-                {/* <select 
-                  name="customer_id" 
-                  value={editData.customer_id} 
-                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
-                >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
-                    </option>
-                  ))}
-                </select> */}
               </label><br />
 
               <label>
                 Quantity:
                 <input type="number" name="quantity" value={editData.quantity} onChange={(e) => setEditData({ ...editData, quantity: e.target.value })} required />
-                {/* <select 
-                  name="customer_id" 
-                  value={editData.customer_id} 
-                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
-                >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
-                    </option>
-                  ))}
-                </select> */}
               </label><br />
 
               <label>
                 Purchase Date:
                 <input type="date" name="purchase_date" value={editData.purchase_date} onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })} required />
-                {/* <select 
-                  name="customer_id" 
-                  value={editData.customer_id} 
-                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
-                >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
-                    </option>
-                  ))}
-                </select> */}
               </label><br />
 
 
