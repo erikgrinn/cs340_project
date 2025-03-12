@@ -242,7 +242,7 @@ function PurchasePage() {
     <>
       <h2>Purchase Data</h2>
       {content}
-      <h2>Add a new purchase:</h2>
+      <h2>Add a new Purchase:</h2>
       <form onSubmit={handleAddSubmit}>
       <label>
         Customer ID:
@@ -252,7 +252,7 @@ function PurchasePage() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Select a customer</option>
+              <option value="" disabled>Select a Customer</option>
               console.log(dropdownOptions.customers)
               {dropdownOptions.customers.map((customer) => (
                 <option key={customer.customer_id} value={customer.customer_id}>
@@ -270,7 +270,7 @@ function PurchasePage() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Select an employee</option>
+              <option value="" disabled>Select an Employee</option>
               <option value="null">No Employee</option>
               console.log(dropdownOptions.employees)
               {dropdownOptions.employees.map((employee) => (
@@ -293,7 +293,7 @@ function PurchasePage() {
           Purchase Date:
           <input type="date" name="purchase_date" value={newPurchaseData.purchase_date} onChange={handleChange} required />
         </label><br  />
-      <button type="submit">Add purchase</button>
+      <button type="submit">Add Purchase</button>
       </form>
     </>
   );
