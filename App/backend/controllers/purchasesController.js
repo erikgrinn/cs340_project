@@ -56,11 +56,6 @@ const createPurchase = async (req, res) => {
 
 const updatePurchase = async (req, res) => {
   const purchaseID = req.params.id;
-  // customer_id: '',
-  //   employee_id: '',
-  //   total_price: '',
-  //   quantity: '',
-  //   purchase_date: ''
   const { purchase_id, customer_id, employee_id, total_price, quantity, purchase_date } = req.body;
   
   try {
