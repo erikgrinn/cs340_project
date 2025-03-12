@@ -164,6 +164,7 @@ function PurchasePage() {
                   name="employee_id" 
                   value={editData.employee_id} 
                   onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
+                  required
                 >
                   <option value="" disabled>Select an employee</option>
                   <option value="null">No Employee</option>
@@ -248,7 +249,8 @@ function PurchasePage() {
         <select 
               name="customer_id" 
               value={newPurchaseData.customer_id} 
-              onChange={handleChange} required
+              onChange={handleChange}
+              required
             >
               <option value="" disabled>Select a customer</option>
               console.log(dropdownOptions.customers)
@@ -266,6 +268,7 @@ function PurchasePage() {
               name="employee_id" 
               value={newPurchaseData.employee_id} 
               onChange={handleChange}
+              required
             >
               <option value="" disabled>Select an employee</option>
               <option value="null">No Employee</option>
