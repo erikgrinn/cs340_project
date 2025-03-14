@@ -1,3 +1,8 @@
+Citation for the baseline structure and code for project:
+Date: 02/15/2025
+Based on:
+Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 # CS 340 React Starter Guide
 
 <!--
