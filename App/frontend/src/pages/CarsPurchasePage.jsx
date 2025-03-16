@@ -138,7 +138,7 @@ function CarsPurchasePage() {
         <table className="carspurchases-table">
           <thead>
             <tr>
-              <th>Purchase ID</th>
+              <th>Car Purchase ID</th>
               <th>Car ID</th>
               <th>Make & Model</th>
               <th>Purchase ID</th>
