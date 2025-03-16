@@ -51,15 +51,28 @@ function DealershipPage() {
     content = <p>No dealerships data found.</p>;
   } else {
     content = (
-      <ul>
-        {dealershipsData.map((dealership) => (
-          <li key={dealership.dealership_id}>
-            <strong>{`ID: ${dealership.dealership_id} - City: ${dealership.city}`}</strong><br />
-            Quantity Sold: {dealership.quantity_sold}<br />
-            Revenue: {dealership.revenue}
-          </li>
-        ))}
-      </ul>
+      <div className="table-container">
+        <table className="dealerships-table">
+          <thead>
+            <tr>
+              <th>Dealership ID</th>
+              <th>City</th>
+              <th>Quantity Sold</th>
+              <th>Revenue</th>
+              </tr>
+              </thead>
+              <tbody>
+              {dealershipsData.map((dealership) => (
+                <tr key={dealership.dealership_id}>
+                <td><strong>{dealership.dealership_id}</strong></td>
+                <td>{dealership.city}</td>
+                <td>{dealership.quantity_sold}</td>
+                <td>{dealership.revenue}</td>
+                </tr>
+              ))}
+              </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -67,8 +80,9 @@ function DealershipPage() {
     <>
       <h2>Dealerships Data</h2>
       {content}
-      <h2>Add a new Dealership!</h2>
+      <h2>Add a new Dealership:</h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
       <label>
         {/* Select City:
         <select name="selectedCity" value={newDealershipData.selectedCity} onChange={handleChange} required>
@@ -81,16 +95,20 @@ function DealershipPage() {
         </select> */}
         City:
         <input type="text" name="city" value={newDealershipData.city} onChange={handleChange} required />
-      </label><br />
+      </label></div>
+
+        <div className="form-group">
         <label>
           Quantity Sold:
           <input type="number" name="quantity_sold" value={newDealershipData.quantity_sold} onChange={handleChange} required />
-        </label><br />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Revenue:
           <input type="number" name="revenue" value={newDealershipData.revenue} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add Dealership</button>
+        </label></div>
+      <button type="submit" className="submit-btn">Add Dealership</button>
       </form>
     </>
   );

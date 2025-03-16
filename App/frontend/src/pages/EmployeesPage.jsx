@@ -80,16 +80,41 @@ function EmployeesPage() {
     content = <p>No Employee data found.</p>;
   } else {
     content = (
-      <ul>
-        {employeesData.map((employee) => (
-          <li key={employee.Employee_id}>
-            <strong>{`Employee ID: ${employee.employee_id} - Dealership ID: ${employee.dealership_id}`}</strong><br />
-            Email: {employee.email}<br />
-            {`Name: ${employee.first_name} ${employee.last_name}`}<br />
-            Phone Number: {employee.phone_number}<br />
-          </li>
-        ))}
-      </ul>
+          <div className="table-container">
+            <table className="employees-table">
+              <thead>
+                <tr>
+                  <th>Employee ID</th>
+                  <th>Dealership ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {employeesData.map((employee) => (
+                      <tr key={employee.employee_id}>
+                          <td><strong>{employee.employee_id}</strong></td>
+                  <td>{employee.dealership_id}</td>
+                  <td>{`${employee.first_name} ${employee.last_name}`}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.phone_number}</td>
+                      </tr>
+                  ))}
+                  </tbody>
+            </table>
+          </div>
+        
+      // <ul>
+      //   {employeesData.map((employee) => (
+      //     <li key={employee.Employee_id}>
+      //       <strong>{`Employee ID: ${employee.employee_id} - Dealership ID: ${employee.dealership_id}`}</strong><br />
+      //       Email: {employee.email}<br />
+      //       {`Name: ${employee.first_name} ${employee.last_name}`}<br />
+      //       Phone Number: {employee.phone_number}<br />
+      //     </li>
+      //   ))}
+      // </ul>
     );
   }
 
@@ -99,6 +124,7 @@ function EmployeesPage() {
       {content}
       <h2>Add a new Employee:</h2>
       <form id="addEmployee" onSubmit={handleSubmit}>
+        <div className="form-group">
       <label>Dealership ID:
         <select
           name="dealership_id" 
@@ -111,24 +137,32 @@ function EmployeesPage() {
               </option>
             ))}
             </select>
-      </label><br />
+      </label></div>
+
+      <div className="form-group">
         <label>
           Email:
-          <input type="text" name="email" value={newEmployeeData.email} onChange={handleChange} />
-        </label><br />
+          <input type="email" name="email" value={newEmployeeData.email} onChange={handleChange} required />
+        </label></div>
+
+        <div className="form-group">
         <label>
           First Name:
           <input type="text" name="first_name" value={newEmployeeData.first_name} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Last Name:
           <input type="text" name="last_name" value={newEmployeeData.last_name} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Phone Number:
-          <input type="text" name="phone_number" value={newEmployeeData.phone_number} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add Employee</button>
+          <input type="text" name="phone_number" value={newEmployeeData.phone_number} onChange={handleChange} required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" />
+        </label></div>
+      <button type="submit" className="submit-btn">Add Employee</button>
       </form>
     </>
   );

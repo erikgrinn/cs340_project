@@ -26,6 +26,7 @@ function CarsPage() {
       const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
       const response = await axios.get(URL);
       setCarsData(response.data);
+      console.log("Cars Data:", response.data);
     } catch (error) {
       console.error('Error fetching car data:', error);
       alert('Error fetching car data from the server.');
@@ -78,19 +79,36 @@ function CarsPage() {
     content = <p>No car data found.</p>;
   } else {
     content = (
-      <ul>
-        {carsData.map((car) => (
-          <li key={car.car_id}>
-            <strong>{`Car ID: ${car.car_id} - Dealership ID: ${car.dealership_id}`}</strong><br />
-            Make & Model: {car.make_model}<br />
-            Color: {car.color}<br />
-            Price: {car.price}<br />
-            Year: {car.year}<br />
-            Used or Not: {car.is_used}<br />
-            In Stock: {car.in_stock}<br />
-          </li>
-        ))}
-      </ul>
+      <div className="table-container">
+        <table className="cars-table">
+          <thead>
+            <tr>
+              <th>Car ID</th>
+              <th>Dealership ID</th>
+              <th>Make & Model</th>
+              <th>Color</th>
+              <th>Price</th>
+              <th>Year</th>
+              <th>Used or Not</th>
+              <th>In Stock</th>
+              </tr>
+              </thead>
+              <tbody>
+              {carsData.map((car) => (
+                <tr key={car.car_id}>
+                  <td><strong>{car.car_id}</strong></td>
+                  <td>{car.dealership_id}</td>
+                  <td>{car.make_model}</td>
+                  <td>{car.color}</td>
+                  <td>{car.price}</td>
+                  <td>{car.year}</td>
+                  <td>{car.is_used}</td>
+                  <td>{car.in_stock}</td>
+                </tr>
+              ))}
+              </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -98,8 +116,9 @@ function CarsPage() {
     <>
       <h2>Car Data</h2>
       {content}
-      <h2>Add a new car!</h2>
+      <h2>Add a new car:</h2>
       <form id="addCar" onSubmit={handleSubmit}>
+        <div className="form-group">
       <label>
         Dealership ID:
         <select name="dealership_id" value={newCarData.dealership_id} onChange={handleChange} required >
@@ -110,32 +129,48 @@ function CarsPage() {
             </option>
           ))}
         </select> 
-      </label><br />
+      </label></div>
+
+      <div className="form-group">
         <label>
           Make & Model:
           <input type="text" name="make_model" value={newCarData.make_model} onChange={handleChange} required />
-        </label><br />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Color:
           <input type="text" name="color" value={newCarData.color} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Price:
-          <input type="text" name="price" value={newCarData.price} onChange={handleChange} required />
-        </label><br  />
+          <input type="number" name="price" value={newCarData.price} onChange={handleChange} required min="0" />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Year:
-          <input type="text" name="year" value={newCarData.year} onChange={handleChange} required />
-        </label><br  />
+          <input type="number" name="year" value={newCarData.year} onChange={handleChange} required min="1900" />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Used or Not:
-          <input type="text" name="is_used" value={newCarData.is_used} onChange={handleChange} required />
-        </label><br  />
+          <select name="is_used" value={newCarData.is_used} onChange={handleChange} required >
+          <option value="">Yes/No</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+          </select>
+        </label></div>
+
+        <div className="form-group">
         <label>
           In Stock:
-          <input type="text" name="in_stock" value={newCarData.in_stock} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add Car</button>
+          <input type="number" name="in_stock" value={newCarData.in_stock} onChange={handleChange} required min="0" />
+        </label></div>
+      <button type="submit" className="submit-btn">Add Car</button>
       </form>
     </>
   );
