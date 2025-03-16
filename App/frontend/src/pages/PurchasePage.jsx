@@ -124,81 +124,114 @@ function PurchasePage() {
     content = <p>No purchase data found.</p>;
   } else {
     content = (
-      <ul>
-        {purchasesData.map((purchase) => (
-          <li key={purchase.purchase_id}>
-            <strong>{`Purchase ID: ${purchase.purchase_id} - Customer ID: ${purchase.customer_id}`}</strong><br />
-            Employee ID: {purchase.employee_id}<br />
-            Total Price: {purchase.total_price}<br />
-            Quantity: {purchase.quantity}<br />
-            Purchase Date: {new Date(purchase.purchase_date).toLocaleDateString()}<br />
-            <button onClick={() => handleEditClick(purchase)}>Edit</button>
-
-          {/* Update Form - Only Shows When Editing */}
-          {editData && editData.purchase_id === purchase.purchase_id && (
-            <form onSubmit={handleEditSubmit}>
-              <h3>Editing Purchase ID: {editData.purchase_id}</h3>
-
-              <label>
-                Customer:
-                {/* <input type="number" name="customer_id" value={editData.customer_id} onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })} required /> */}
-                <select 
-              name="customer_id" 
-              value={newPurchaseData.customer_id} 
-              onChange={handleChange} required
-            >
-              <option value="" disabled>Select a customer</option>
-              console.log(dropdownOptions.customers)
-              {dropdownOptions.customers.map((customer) => (
-                <option key={customer.customer_id} value={customer.customer_id}>
-                  {customer.first_name} (ID: {customer.customer_id})
-                </option>
-              ))}
-          </select>
-              </label><br />
-
-              <label>
-                Employee:
-                {/* <input type="number" name="employee_id" value={editData.employee_id} onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })} /> */}
-                <select 
-                  name="employee_id" 
-                  value={editData.employee_id} 
-                  onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
-                  required
-                >
-                  <option value="" disabled>Select an employee</option>
-                  <option value="null">No Employee</option>
-                  {dropdownOptions.employees.map((employee) => (
-                    <option key={employee.employee_id} value={employee.employee_id}>
-                      {employee.first_name} (ID: {employee.employee_id})
-                    </option>
-                  ))}
-                </select>
-              </label><br />
-
-              <label>
-                Total Price:
-                <input type="number" name="total_price" value={editData.total_price} onChange={(e) => setEditData({ ...editData, total_price: e.target.value })} required />
-              </label><br />
-
-              <label>
-                Quantity:
-                <input type="number" name="quantity" value={editData.quantity} onChange={(e) => setEditData({ ...editData, quantity: e.target.value })} required />
-              </label><br />
-
-              <label>
-                Purchase Date:
-                <input type="date" name="purchase_date" value={editData.purchase_date} onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })} required />
-              </label><br />
-
-
-              <button type="submit">Update</button>
-              <button type="button" onClick={() => setEditData(null)}>Cancel</button>
-            </form>
-          )}
-          </li>
-        ))}
-      </ul>
+      <div className="table-container">
+        <table className="purchases-table">
+          <thead>
+            <tr>
+              <th>Purchase ID</th>
+              <th>Customer ID</th>
+              <th>Employee ID</th>
+              <th>Total Price</th>
+              <th>Quantity</th>
+              <th>Purchase Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {purchasesData.map((purchase) => (
+              <tr key={purchase.purchase_id}>
+                <td><strong>{purchase.purchase_id}</strong></td>
+                <td>{purchase.customer_id}</td>
+                <td>{purchase.employee_id}</td>
+                <td>{purchase.total_price}</td>
+                <td>{purchase.quantity}</td>
+                <td>{new Date(purchase.purchase_date).toLocaleDateString()}</td>
+                <td>
+                  <button onClick={() => handleEditClick(purchase)}>Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+  
+        {/* Update Form - Only Shows When Editing */}
+        {editData && (
+          <form onSubmit={handleEditSubmit} className="edit-form">
+            <h3>Editing Purchase ID: {editData.purchase_id}</h3>
+  
+            <label>
+              Customer:
+              <select
+                name="customer_id"
+                value={editData.customer_id}
+                onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
+                required
+              >
+                <option value="" disabled>Select a customer</option>
+                {dropdownOptions.customers.map((customer) => (
+                  <option key={customer.customer_id} value={customer.customer_id}>
+                    {customer.first_name} (ID: {customer.customer_id})
+                  </option>
+                ))}
+              </select>
+            </label><br />
+  
+            <label>
+              Employee:
+              <select
+                name="employee_id"
+                value={editData.employee_id !== null && editData.employee_id !== undefined ? editData.employee_id : "null"}
+                onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
+                required
+              >
+                <option value="" disabled>Select an employee</option>
+                <option value="null">No Employee</option>
+                {dropdownOptions.employees.map((employee) => (
+                  <option key={employee.employee_id} value={employee.employee_id}>
+                    {employee.first_name} (ID: {employee.employee_id})
+                  </option>
+                ))}
+              </select>
+            </label><br />
+  
+            <label>
+              Total Price:
+              <input
+                type="number"
+                name="total_price"
+                value={editData.total_price}
+                onChange={(e) => setEditData({ ...editData, total_price: e.target.value })}
+                required
+              />
+            </label><br />
+  
+            <label>
+              Quantity:
+              <input
+                type="number"
+                name="quantity"
+                value={editData.quantity}
+                onChange={(e) => setEditData({ ...editData, quantity: e.target.value })}
+                required
+              />
+            </label><br />
+  
+            <label>
+              Purchase Date:
+              <input
+                type="date"
+                name="purchase_date"
+                value={editData.purchase_date}
+                onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })}
+                required
+              />
+            </label><br />
+  
+            <button type="submit">Update</button>
+            <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+          </form>
+        )}
+      </div>
     );
   }
 
