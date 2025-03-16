@@ -80,7 +80,6 @@ function EmployeesPage() {
     content = <p>No Employee data found.</p>;
   } else {
     content = (
-        <div className="page-container">
           <div className="table-container">
             <table className="employees-table">
               <thead>
@@ -105,7 +104,7 @@ function EmployeesPage() {
                   </tbody>
             </table>
           </div>
-        </div>
+        
       // <ul>
       //   {employeesData.map((employee) => (
       //     <li key={employee.Employee_id}>
@@ -125,6 +124,7 @@ function EmployeesPage() {
       {content}
       <h2>Add a new Employee:</h2>
       <form id="addEmployee" onSubmit={handleSubmit}>
+        <div className="form-group">
       <label>Dealership ID:
         <select
           name="dealership_id" 
@@ -137,24 +137,32 @@ function EmployeesPage() {
               </option>
             ))}
             </select>
-      </label><br />
+      </label></div>
+
+      <div className="form-group">
         <label>
           Email:
-          <input type="text" name="email" value={newEmployeeData.email} onChange={handleChange} />
-        </label><br />
+          <input type="email" name="email" value={newEmployeeData.email} onChange={handleChange} required />
+        </label></div>
+
+        <div className="form-group">
         <label>
           First Name:
           <input type="text" name="first_name" value={newEmployeeData.first_name} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Last Name:
           <input type="text" name="last_name" value={newEmployeeData.last_name} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Phone Number:
-          <input type="text" name="phone_number" value={newEmployeeData.phone_number} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add Employee</button>
+          <input type="text" name="phone_number" value={newEmployeeData.phone_number} onChange={handleChange} required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" />
+        </label></div>
+      <button type="submit" className="submit-btn">Add Employee</button>
       </form>
     </>
   );
