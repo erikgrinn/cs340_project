@@ -134,75 +134,87 @@ function CarsPurchasePage() {
     content = <p>No cars purchases data found.</p>;
   } else {
     content = (
-      <ul>
-        {/* if returning JSX, use ( for cleaner, shorter code.
-        if need to define variables or logic before returning JSX, use {} and explicitly return. */}
-        {carsPurchasesData.map((carspurchases) => {
-        // Find the corresponding car
-        const car = dropdownOptions.cars.find(car => car.car_id === carspurchases.car_id);
-        const makeModel = car ? car.make_model : 'Unknown';
-        return (
-          <li key={carspurchases.car_purch_id}>
-            <strong>{`ID: ${carspurchases.car_purch_id}`}</strong><br />
-            Car ID: {carspurchases.car_id} {makeModel}<br />
-            Purchase ID: {carspurchases.purchase_id}<br />
-            <button onClick={() => handleEditClick(carspurchases)}>Edit</button>
-
-            {/* Update Form - Only Shows When Editing */}
-            {editData && editData.car_purch_id === carspurchases.car_purch_id && (
-            <form onSubmit={handleEditSubmit}>
-              <h3>Editing Car Purchase ID: {editData.car_purch_id}</h3>
-
-              <label>
-                Car:
-                <select 
-                  name="car_id" 
-                  value={editData.car_id} 
-                  onChange={(e) => setEditData({ ...editData, car_id: e.target.value })}
-                >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
-                    </option>
-                  ))}
-                </select>
-              </label><br />
-
-              <label>
-                Purchase:
-                <select 
-                  name="purchase_id" 
-                  value={editData.purchase_id} 
-                  onChange={(e) => setEditData({ ...editData, purchase_id: e.target.value })}
-                >
-                  <option value="">Select a Purchase</option>
-                  {dropdownOptions.purchases.map((purchase) => (
-                    <option key={purchase.purchase_id} value={purchase.purchase_id}>
-                      {purchase.date} (ID: {purchase.purchase_id})
-                    </option>
-                  ))}
-                </select>
-              </label><br />
-
-              <button type="submit">Update</button>
-              <button type="button" onClick={() => setEditData(null)}>Cancel</button>
-            </form>
-          )}
-          </li>
-        )
-        })}
-      </ul>
-      );
-    }
+      <div className="table-container">
+        <table className="carspurchases-table">
+          <thead>
+            <tr>
+              <th>Purchase ID</th>
+              <th>Car ID</th>
+              <th>Make & Model</th>
+              <th>Purchase ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {carsPurchasesData.map((carspurchase) => {
+              const car = dropdownOptions.cars.find(car => car.car_id === carspurchase.car_id);
+              const makeModel = car ? car.make_model : 'Unknown';
+              return (
+                <tr key={carspurchase.car_purch_id}>
+                  <td><strong>{carspurchase.car_purch_id}</strong></td>
+                  <td>{carspurchase.car_id}</td>
+                  <td>{makeModel}</td>
+                  <td>{carspurchase.purchase_id}</td>
+                  <td>
+                    <button onClick={() => handleEditClick(carspurchase)}>Edit</button>
+                  </td>
+                </tr>
+              )})}
+          </tbody>
+        </table>
+  
+        {/* Update Form - Only Shows When Editing */}
+        {editData && (
+          <form onSubmit={handleEditSubmit} className="edit-form">
+            <h3>Editing Car_Purch ID: {editData.car_purch_id}</h3>
+  
+            <label>
+              Car ID:
+              <select
+                name="car_id"
+                value={editData.car_id}
+                onChange={(e) => setEditData({ ...editData, car_id: e.target.value })}
+                required
+              >
+                <option value="" disabled>Select a Car</option>
+                {dropdownOptions.cars.map((car) => (
+                  <option key={car.car_id} value={car.car_id}>
+                    {car.make_model} (ID: {car.car_id})
+                  </option>
+                ))}
+              </select>
+            </label><br />
+  
+            <label>
+              Employee:
+              <select
+                name="purchase_id"
+                value={editData.purchase_id}
+                onChange={(e) => setEditData({ ...editData, purchase_id: e.target.value })}
+                required
+              >
+                <option value="" disabled>Select a Purchase</option>
+                {dropdownOptions.purchases.map((purchase) => (
+                  <option key={purchase.purchase_id} value={purchase.purchase_id}>
+                    (ID: {purchase.purchase_id})
+                  </option>
+                ))}
+              </select>
+            </label><br />
+  
+            <button type="submit">Update</button>
+            <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+          </form>
+        )}
+      </div>
+    );
+  }
 
 
   return (
     <>
     <div className="cars-purchases-container">
       {content}
-
-
       <div id="insert" className="section">
         <h2>Add a new Cars Purchase:</h2>
         <form id="addCarPurchase" onSubmit={handleAddSubmit}>
