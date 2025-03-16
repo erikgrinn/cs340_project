@@ -243,6 +243,7 @@ function PurchasePage() {
       {content}
       <h2>Add a new purchase:</h2>
       <form onSubmit={handleAddSubmit}>
+        <div className="form-group">
       <label>
         Customer ID:
         <select 
@@ -250,7 +251,7 @@ function PurchasePage() {
               value={newPurchaseData.customer_id} 
               onChange={handleChange} required
             >
-              <option value="" disabled>Select a customer</option>
+              <option value="" disabled>Select a Customer</option>
               console.log(dropdownOptions.customers)
               {dropdownOptions.customers.map((customer) => (
                 <option key={customer.customer_id} value={customer.customer_id}>
@@ -259,7 +260,9 @@ function PurchasePage() {
               ))}
           </select>
         {/* <input type="number" name="customer_id" value={newPurchaseData.customer_id} onChange={handleChange} required /> */}
-      </label><br />
+      </label></div>
+
+      <div className="form-group">
         <label>
           Employee ID:
           <select 
@@ -267,7 +270,7 @@ function PurchasePage() {
               value={newPurchaseData.employee_id} 
               onChange={handleChange}
             >
-              <option value="" disabled>Select an employee</option>
+              <option value="" disabled>Select an Employee</option>
               <option value="null">No Employee</option>
               console.log(dropdownOptions.employees)
               {dropdownOptions.employees.map((employee) => (
@@ -277,20 +280,26 @@ function PurchasePage() {
               ))}
           </select>
           {/* <input type="text" name="employee_id" value={newPurchaseData.employee_id} onChange={handleChange} /> */}
-        </label><br />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Total Price:
           <input type="number" name="total_price" value={newPurchaseData.total_price} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Quantity:
           <input type="number" name="quantity" value={newPurchaseData.quantity} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Purchase Date:
           <input type="date" name="purchase_date" value={newPurchaseData.purchase_date} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add purchase</button>
+        </label></div>
+      <button type="submit" className="submit-btn">Add purchase</button>
       </form>
     </>
   );

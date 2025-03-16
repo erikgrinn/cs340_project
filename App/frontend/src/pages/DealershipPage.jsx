@@ -64,7 +64,7 @@ function DealershipPage() {
               <tbody>
               {dealershipsData.map((dealership) => (
                 <tr key={dealership.dealership_id}>
-                <td>{dealership.dealership_id}</td>
+                <td><strong>{dealership.dealership_id}</strong></td>
                 <td>{dealership.city}</td>
                 <td>{dealership.quantity_sold}</td>
                 <td>{dealership.revenue}</td>

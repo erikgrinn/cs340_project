@@ -75,6 +75,14 @@ section {
   font-size:large;
 }
 
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  color: var(--darkBrown);
+  text-decoration: underline;
+  background-color: var(--blueWhite);
+}
+
 .btn {
   padding: 5px;
   margin-top: 3px;
@@ -82,12 +90,17 @@ section {
 
 .btn:hover {
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  color: var(--darkBrown);
+  text-decoration: underline;
+  background-color: var(--blueWhite);
 }
 
 .submit-btn {
   background-color: var(--blueWhite);
   margin-bottom: 5px;
 }
+
+
 
 table {
   width: 100%;
@@ -178,6 +191,7 @@ select {
 
 input[type="text"],
 input[type="email"],
-input[type="number"] {
+input[type="number"],
+input[type="date"] {
   margin-left: 10px;
 }

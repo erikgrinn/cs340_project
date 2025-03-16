@@ -54,15 +54,28 @@ function CustomersPage() {
     content = <p>No customers data found.</p>;
   } else {
     content = (
-      <ul>
+      <div className="table-container">
+        <table className="customers-table">
+        <thead>
+          <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
         {customersData.map((customer) => (
-          <li key={customer.customer_id}>
-            <strong>{`ID: ${customer.customer_id} - Name: ${customer.first_name} ${customer.last_name}`}</strong><br />
-            Email: {customer.email}<br />
-            Phone Number: {customer.phone_number}
-          </li>
+          <tr key={customer.customer_id}>
+            <td><strong>{customer.customer_id}</strong></td>
+            <td>{`${customer.first_name} ${customer.last_name}`}</td>
+            <td>{customer.email}</td>
+            <td>{customer.phone_number}</td>
+          </tr>
         ))}
-      </ul>
+        </tbody>
+       </table>
+       </div>
     );
   }
 
@@ -70,8 +83,9 @@ function CustomersPage() {
     <>
       <h2>Customers Data</h2>
       {content}
-      <h2>Add a new Customer!</h2>
+      <h2>Add a new Customer:</h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
       <label>
         {/* Select City:
         <select name="selectedCity" value={newDealershipData.selectedCity} onChange={handleChange} required>
@@ -84,20 +98,26 @@ function CustomersPage() {
         </select> */}
         First Name:
         <input type="text" name="first_name" value={newCustomerData.first_name} onChange={handleChange} required />
-      </label><br />
+      </label></div>
+
+      <div className="form-group">
         <label>
           Last Name:
           <input type="text" name="last_name" value={newCustomerData.last_name} onChange={handleChange} required />
-        </label><br />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Email:
           <input type="text" name="email" value={newCustomerData.email} onChange={handleChange} required />
-        </label><br  />
+        </label></div>
+
+        <div className="form-group">
         <label>
           Phone Number:
           <input type="text" name="phone_number" value={newCustomerData.phone_number} onChange={handleChange} required />
-        </label><br  />
-      <button type="submit">Add Customer</button>
+        </label></div>
+      <button type="submit" className="submit-btn">Add Customer</button>
       </form>
     </>
   );
