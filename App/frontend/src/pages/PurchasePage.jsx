@@ -139,22 +139,23 @@ function PurchasePage() {
             <form onSubmit={handleEditSubmit}>
               <h3>Editing Purchase ID: {editData.purchase_id}</h3>
 
-              {/* <label>
+              <label>
                 Customer:
-                <input type="number" name="customer_id" value={editData.customer_id} onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })} required /> */}
-                {/* <select 
-                  name="customer_id" 
-                  value={editData.customer_id} 
-                  onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })}
-                >
-                  <option value="">Select a Car</option>
-                  {dropdownOptions.cars.map((car) => (
-                    <option key={car.car_id} value={car.car_id}>
-                      {car.model} (ID: {car.car_id})
-                    </option>
-                  ))}
-                </select> */}
-              {/* </label><br /> */}
+                {/* <input type="number" name="customer_id" value={editData.customer_id} onChange={(e) => setEditData({ ...editData, customer_id: e.target.value })} required /> */}
+                <select 
+              name="customer_id" 
+              value={newPurchaseData.customer_id} 
+              onChange={handleChange} required
+            >
+              <option value="" disabled>Select a customer</option>
+              console.log(dropdownOptions.customers)
+              {dropdownOptions.customers.map((customer) => (
+                <option key={customer.customer_id} value={customer.customer_id}>
+                  {customer.first_name} (ID: {customer.customer_id})
+                </option>
+              ))}
+          </select>
+              </label><br />
 
               <label>
                 Employee:
@@ -164,7 +165,7 @@ function PurchasePage() {
                   value={editData.employee_id} 
                   onChange={(e) => setEditData({ ...editData, employee_id: e.target.value })}
                 >
-                  <option value="null">Select an employee</option>
+                  <option value="" disabled>Select an employee</option>
                   <option value="null">No Employee</option>
                   {dropdownOptions.employees.map((employee) => (
                     <option key={employee.employee_id} value={employee.employee_id}>
@@ -174,9 +175,9 @@ function PurchasePage() {
                 </select>
               </label><br />
 
-              {/* <label>
+              <label>
                 Total Price:
-                <input type="number" name="total_price" value={editData.total_price} onChange={(e) => setEditData({ ...editData, total_price: e.target.value })} required /> */}
+                <input type="number" name="total_price" value={editData.total_price} onChange={(e) => setEditData({ ...editData, total_price: e.target.value })} required />
                 {/* <select 
                   name="customer_id" 
                   value={editData.customer_id} 
@@ -189,11 +190,11 @@ function PurchasePage() {
                     </option>
                   ))}
                 </select> */}
-              {/* </label><br /> */}
+              </label><br />
 
-              {/* <label>
+              <label>
                 Quantity:
-                <input type="number" name="quantity" value={editData.quantity} onChange={(e) => setEditData({ ...editData, quantity: e.target.value })} required /> */}
+                <input type="number" name="quantity" value={editData.quantity} onChange={(e) => setEditData({ ...editData, quantity: e.target.value })} required />
                 {/* <select 
                   name="customer_id" 
                   value={editData.customer_id} 
@@ -206,11 +207,11 @@ function PurchasePage() {
                     </option>
                   ))}
                 </select> */}
-              {/* </label><br /> */}
+              </label><br />
 
-              {/* <label>
+              <label>
                 Purchase Date:
-                <input type="date" name="purchase_date" value={editData.purchase_date} onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })} required /> */}
+                <input type="date" name="purchase_date" value={editData.purchase_date} onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })} required />
                 {/* <select 
                   name="customer_id" 
                   value={editData.customer_id} 
@@ -223,7 +224,7 @@ function PurchasePage() {
                     </option>
                   ))}
                 </select> */}
-              {/* </label><br /> */}
+              </label><br />
 
 
               <button type="submit">Update</button>
