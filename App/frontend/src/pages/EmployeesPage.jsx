@@ -80,16 +80,42 @@ function EmployeesPage() {
     content = <p>No Employee data found.</p>;
   } else {
     content = (
-      <ul>
-        {employeesData.map((employee) => (
-          <li key={employee.Employee_id}>
-            <strong>{`Employee ID: ${employee.employee_id} - Dealership ID: ${employee.dealership_id}`}</strong><br />
-            Email: {employee.email}<br />
-            {`Name: ${employee.first_name} ${employee.last_name}`}<br />
-            Phone Number: {employee.phone_number}<br />
-          </li>
-        ))}
-      </ul>
+        <div className="page-container">
+          <div className="table-container">
+            <table className="employees-table">
+              <thead>
+                <tr>
+                  <th>Employee ID</th>
+                  <th>Dealership ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {employeesData.map((employee) => (
+                      <tr key={employee.employee_id}>
+                          <td><strong>{employee.employee_id}</strong></td>
+                  <td>{employee.dealership_id}</td>
+                  <td>{`${employee.first_name} ${employee.last_name}`}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee.phone_number}</td>
+                      </tr>
+                  ))}
+                  </tbody>
+            </table>
+          </div>
+        </div>
+      // <ul>
+      //   {employeesData.map((employee) => (
+      //     <li key={employee.Employee_id}>
+      //       <strong>{`Employee ID: ${employee.employee_id} - Dealership ID: ${employee.dealership_id}`}</strong><br />
+      //       Email: {employee.email}<br />
+      //       {`Name: ${employee.first_name} ${employee.last_name}`}<br />
+      //       Phone Number: {employee.phone_number}<br />
+      //     </li>
+      //   ))}
+      // </ul>
     );
   }
 
