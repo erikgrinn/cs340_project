@@ -189,6 +189,10 @@ select {
   margin-bottom: 5px;
 }
 
+.edit-form {
+  padding: 5px;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="number"],

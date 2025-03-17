@@ -172,7 +172,8 @@ function CarsPurchasePage() {
         {editData && (
           <form onSubmit={handleEditSubmit} className="edit-form">
             <h3>Editing Car_Purch ID: {editData.car_purch_id}</h3>
-  
+          
+            <div className="form-group">
             <label>
               Car ID:
               <select
@@ -188,8 +189,9 @@ function CarsPurchasePage() {
                   </option>
                 ))}
               </select>
-            </label><br />
+            </label></div>
   
+          <div className="form-group">
             <label>
               Employee:
               <select
@@ -205,10 +207,10 @@ function CarsPurchasePage() {
                   </option>
                 ))}
               </select>
-            </label><br />
+            </label></div>
   
-            <button type="submit">Update</button>
-            <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+            <button type="submit" className="submit-btn">Update</button>
+            <button type="button" className="submit-btn" onClick={() => setEditData(null)}>Cancel</button>
           </form>
         )}
       </div>
