@@ -164,7 +164,7 @@ function PurchasePage() {
         {editData && (
           <form onSubmit={handleEditSubmit} className="edit-form">
             <h3>Editing Purchase ID: {editData.purchase_id}</h3>
-  
+              <div className="form-group">
             <label>
               Customer:
               <select
@@ -180,8 +180,9 @@ function PurchasePage() {
                   </option>
                 ))}
               </select>
-            </label><br />
+            </label></div>
   
+          <div className="form-group">
             <label>
               Employee:
               <select
@@ -198,8 +199,9 @@ function PurchasePage() {
                   </option>
                 ))}
               </select>
-            </label><br />
+            </label></div>
   
+          <div className="form-group">
             <label>
               Total Price:
               <input
@@ -209,8 +211,9 @@ function PurchasePage() {
                 onChange={(e) => setEditData({ ...editData, total_price: e.target.value })}
                 required
               />
-            </label><br />
+            </label></div>
   
+            <div className="form-group">
             <label>
               Quantity:
               <input
@@ -220,8 +223,9 @@ function PurchasePage() {
                 onChange={(e) => setEditData({ ...editData, quantity: e.target.value })}
                 required
               />
-            </label><br />
+            </label></div>
   
+            <div className="form-group">
             <label>
               Purchase Date:
               <input
@@ -231,10 +235,10 @@ function PurchasePage() {
                 onChange={(e) => setEditData({ ...editData, purchase_date: e.target.value })}
                 required
               />
-            </label><br />
+            </label></div>
   
-            <button type="submit">Update</button>
-            <button type="button" onClick={() => setEditData(null)}>Cancel</button>
+            <button type="submit" className="submit-btn">Update</button>
+            <button type="button" className="submit-btn" onClick={() => setEditData(null)}>Cancel</button>
           </form>
         )}
       </div>
