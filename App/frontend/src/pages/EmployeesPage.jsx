@@ -86,22 +86,27 @@ function EmployeesPage() {
                 <tr>
                   <th>Employee ID</th>
                   <th>Dealership ID</th>
+                  <th>Dealership City</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone Number</th>
                   </tr>
                   </thead>
                   <tbody>
-                    {employeesData.map((employee) => (
+                    {employeesData.map((employee) => {
+                      const dealership = dropdownOptions.dealerships.find(dealership => dealership.dealership_id === employee.dealership_id);
+                      const city = dealership ? dealership.city : 'Unknown';
+                      return (
                       <tr key={employee.employee_id}>
                           <td><strong>{employee.employee_id}</strong></td>
-                  <td>{employee.dealership_id}</td>
-                  <td>{`${employee.first_name} ${employee.last_name}`}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee.phone_number}</td>
+                          <td>{employee.dealership_id}</td>
+                          <td>{city}</td>
+                          <td>{`${employee.first_name} ${employee.last_name}`}</td>
+                          <td>{employee.email}</td>
+                          <td>{employee.phone_number}</td>
                       </tr>
-                  ))}
-                  </tbody>
+                  )})}
+                </tbody>
             </table>
           </div>
         

@@ -267,8 +267,8 @@ function CarsPurchasePage() {
         ))}
        </select>
        <button className="btn" type="submit">Remove Cars Purchases</button>
-       <button className="btn" type="button" onClick={() => setNewCarsPurchases({ car_id: 0, purchase_id: 0})}
-       >Cancel</button>
+       {/* <button className="btn" type="button" onClick={() => setNewCarsPurchases({ car_id: 0, purchase_id: 0})}
+       >Cancel</button> */}
       </form>
       </div>
     </>
