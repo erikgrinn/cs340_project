@@ -85,7 +85,6 @@ function EmployeesPage() {
               <thead>
                 <tr>
                   <th>Employee ID</th>
-                  <th>Dealership ID</th>
                   <th>Dealership City</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -99,7 +98,6 @@ function EmployeesPage() {
                       return (
                       <tr key={employee.employee_id}>
                           <td><strong>{employee.employee_id}</strong></td>
-                          <td>{employee.dealership_id}</td>
                           <td>{city}</td>
                           <td>{`${employee.first_name} ${employee.last_name}`}</td>
                           <td>{employee.email}</td>
