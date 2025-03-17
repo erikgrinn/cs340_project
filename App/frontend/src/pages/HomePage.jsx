@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';  // import the hooks you are going to use
 import axios from 'axios';
 
+// Citation for the following functions:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 function HomePage() {
   //  // useState hook to initialize the diagnosticData state variable to store the fetched data
   //  const [diagnosticData, setDiagnosticData] = useState([]);

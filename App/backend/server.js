@@ -2,6 +2,11 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+// Citation for the following code:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 // Server.js defines API routes. Each route handled by specific router file.
 
 const app = express();

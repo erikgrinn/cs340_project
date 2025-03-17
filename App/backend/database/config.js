@@ -1,3 +1,8 @@
+// Citation for the following code:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 // Get an instance of mysql we can use in the app
 const mysql = require("mysql2");
 require("dotenv").config();

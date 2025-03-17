@@ -3,6 +3,11 @@ import CreatePerson from "../components/bsg_people/CreatePerson";
 import PeopleTable from "../components/bsg_people/PersonTable";
 import UpdatePerson from "../components/bsg_people/UpdatePerson";
 
+// Citation for the following functions:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code, not used and kept for reference
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 function PeoplePage() {
   return (
     <div>

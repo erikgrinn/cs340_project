@@ -1,3 +1,8 @@
+// Citation for the following code:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 // Load db config
 const db = require("../database/config");
 // Load .env variables

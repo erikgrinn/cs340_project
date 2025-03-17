@@ -3,6 +3,11 @@ import { RiCreativeCommonsZeroFill } from "react-icons/ri";
 import TableRow from "./PersonTableRow";
 import axios from "axios";
 
+// Citation for the following file:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code, not used and kept for reference
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 const PeopleTable = () => {
   const [people, setPeople] = useState([]);
 

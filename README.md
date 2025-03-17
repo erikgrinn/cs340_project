@@ -1,7 +1,7 @@
 <!--
 Citation for the baseline structure and code for project:
-Date: 02/15/2025
-Based on:
+Date: 02/26/2025
+Based on: CS 340 Starter Code
 Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
 -->
 

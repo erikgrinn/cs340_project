@@ -2,6 +2,10 @@ import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
+// Citation for the following functions:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
 
 function EmployeesPage() {
 
@@ -123,7 +127,6 @@ function EmployeesPage() {
 
   return (
     <>
-      <h2>Employee Data</h2>
       {content}
       <h2>Add a new Employee:</h2>
       <form id="addEmployee" onSubmit={handleSubmit}>

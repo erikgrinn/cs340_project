@@ -1,3 +1,8 @@
+// Citation for the following file:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 // reactServer.cjs
 // Uses common javascript to serve the react build folder (/dist)
 

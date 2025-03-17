@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Citation for the following file:
+// Date: 02/26/2025
+// Based on: CS 340 Starter Code, not used and kept for reference
+// Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
+
 function CreatePerson() {
   const navigate = useNavigate();
 
