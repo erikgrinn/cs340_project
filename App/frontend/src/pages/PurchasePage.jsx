@@ -129,8 +129,8 @@ function PurchasePage() {
           <thead>
             <tr>
               <th>Purchase ID</th>
-              <th>Customer ID</th>
-              <th>Employee ID</th>
+              <th>Customer</th>
+              <th>Employee</th>
               <th>Total Price</th>
               <th>Quantity</th>
               <th>Purchase Date</th>
@@ -138,11 +138,17 @@ function PurchasePage() {
             </tr>
           </thead>
           <tbody>
-            {purchasesData.map((purchase) => (
+            {purchasesData.map((purchase) => {
+                const customer = dropdownOptions.customers.find(customer => customer.customer_id === purchase.customer_id);
+                const customerName = customer ? customer.first_name : 'Unknown';
+                const employee = dropdownOptions.employees.find(employee => employee.employee_id === purchase.employee_id);
+                const employeeName = employee ? employee.first_name : 'None';
+                return (
+            
               <tr key={purchase.purchase_id}>
                 <td><strong>{purchase.purchase_id}</strong></td>
-                <td>{purchase.customer_id}</td>
-                <td>{purchase.employee_id}</td>
+                <td>{customerName}</td>
+                <td>{employeeName}</td>
                 <td>{purchase.total_price}</td>
                 <td>{purchase.quantity}</td>
                 <td>{new Date(purchase.purchase_date).toLocaleDateString()}</td>
@@ -150,7 +156,7 @@ function PurchasePage() {
                   <button onClick={() => handleEditClick(purchase)}>Edit</button>
                 </td>
               </tr>
-            ))}
+            )})}
           </tbody>
         </table>
   
