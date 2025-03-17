@@ -84,7 +84,7 @@ function CarsPage() {
           <thead>
             <tr>
               <th>Car ID</th>
-              <th>Dealership ID</th>
+              <th>Dealership City</th>
               <th>Make & Model</th>
               <th>Color</th>
               <th>Price</th>
@@ -94,10 +94,13 @@ function CarsPage() {
               </tr>
               </thead>
               <tbody>
-              {carsData.map((car) => (
+              {carsData.map((car) => {
+                const dealership = dropdownOptions.dealerships.find(dealership => dealership.dealership_id === car.dealership_id);
+                const city = dealership ? dealership.city : 'Unknown';
+                return (
                 <tr key={car.car_id}>
                   <td><strong>{car.car_id}</strong></td>
-                  <td>{car.dealership_id}</td>
+                  <td>{city}</td>
                   <td>{car.make_model}</td>
                   <td>{car.color}</td>
                   <td>{car.price}</td>
@@ -105,7 +108,7 @@ function CarsPage() {
                   <td>{car.is_used}</td>
                   <td>{car.in_stock}</td>
                 </tr>
-              ))}
+              )})}
               </tbody>
         </table>
       </div>
