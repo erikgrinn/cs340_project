@@ -84,7 +84,7 @@ function CarsPage() {
           <thead>
             <tr>
               <th>Car ID</th>
-              <th>Dealership City</th>
+              <th>Dealership</th>
               <th>Make & Model</th>
               <th>Color</th>
               <th>Price</th>
@@ -100,13 +100,13 @@ function CarsPage() {
                 return (
                 <tr key={car.car_id}>
                   <td><strong>{car.car_id}</strong></td>
-                  <td>{city}</td>
+                  <td>ID: {car.dealership_id}, {city}</td>
                   <td>{car.make_model}</td>
                   <td>{car.color}</td>
                   <td>{car.price}</td>
                   <td>{car.year}</td>
-                  <td>{car.is_used}</td>
-                  <td>{car.in_stock}</td>
+                  <td>{car.is_used === 1 ? "Yes" : "No"}</td>
+                  <td>{car.in_stock === 1 ? "Yes" : "No"}</td>
                 </tr>
               )})}
               </tbody>
@@ -155,7 +155,7 @@ function CarsPage() {
         <div className="form-group">
         <label>
           Year:
-          <input type="number" name="year" value={newCarData.year} onChange={handleChange} required min="1900" />
+          <input type="number" name="year" value={newCarData.year} onChange={handleChange} required min="1900" max="2100" />
         </label></div>
 
         <div className="form-group">
@@ -171,7 +171,11 @@ function CarsPage() {
         <div className="form-group">
         <label>
           In Stock:
-          <input type="number" name="in_stock" value={newCarData.in_stock} onChange={handleChange} required min="0" />
+          <select name="in_stock" value={newCarData.in_stock} onChange={handleChange} required >
+          <option value="">Yes/No</option>
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+          </select>
         </label></div>
       <button type="submit" className="submit-btn">Add Car</button>
       </form>

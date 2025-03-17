@@ -140,9 +140,9 @@ function PurchasePage() {
           <tbody>
             {purchasesData.map((purchase) => {
                 const customer = dropdownOptions.customers.find(customer => customer.customer_id === purchase.customer_id);
-                const customerName = customer ? customer.first_name : 'Unknown';
+                const customerName = customer ? `${customer.first_name} ${customer.last_name}`  : 'Unknown';
                 const employee = dropdownOptions.employees.find(employee => employee.employee_id === purchase.employee_id);
-                const employeeName = employee ? employee.first_name : 'None';
+                const employeeName = employee ? `${employee.first_name} ${employee.last_name}` : 'None';
                 return (
             
               <tr key={purchase.purchase_id}>
