@@ -1,6 +1,7 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import { supabase } from '../../supabaseClient';
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -17,13 +18,12 @@ function DealershipPage() {
 
   const fetchDealershipsData = async () => {
     try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
-      const response = await axios.get(URL);
-      setDealershipsData(response.data);
+      const { data, error } = await supabase.from('dealerships').select('*');
+      if (error) throw error;
+      console.log('Dealerships:', data);
+      setDealershipsData(data);
     } catch (error) {
-      console.error('Error fetching dealerships data:', error);
-      alert('Error fetching dealerships data from the server.');
+      console.error('Error fetching dealerships:', error);
     }
   };
 
@@ -42,14 +42,17 @@ function DealershipPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
-      await axios.post(URL, newDealershipData);
-      fetchDealershipsData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('dealerships').insert([newDealershipData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchDealershipsData();
+      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new dealership:', error);
-      alert('Error adding new dealership to the server.');
+      alert('Error adding new dealership to the database.');
     }
-}
+  };
 
   let content;
   if (!dealershipsData || dealershipsData.length === 0) {
