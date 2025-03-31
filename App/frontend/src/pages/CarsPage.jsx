@@ -1,6 +1,6 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
 import { supabase } from '../../supabaseClient';
 
 
@@ -28,7 +28,7 @@ function CarsPage() {
 
   const fetchCarsData = async () => {
     try {
-      const { data, error } = await supabase.from('Cars').select('*');
+      const { data, error } = await supabase.from('cars').select('*');
       if (error) throw error;
       console.log('Cars:', data);
       setCarsData(data);
@@ -51,7 +51,7 @@ function CarsPage() {
 
   const fetchDropdownOptions = async () => {
     try {
-      const { data, error } = await supabase.from('Dealerships').select('*');
+      const { data, error } = await supabase.from('dealerships').select('*');
       if (error) throw error;
         console.log('dealerships:', data);
         setDropdownOptions({
@@ -86,20 +86,33 @@ function CarsPage() {
     setNewCar({
         ...newCarData,
         [name]: value
-    });
+        // [name]: name === "is_used" || name === "in_stock" ? value === "1" : value, // Convert "1" to true and "0" to false
+      });
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
-      await axios.post(URL, newCarData);
-      fetchCarsData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('cars').insert([newCarData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchCarsData();
+      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new car:', error);
-      alert('Error adding new car to the server.');
+      alert('Error adding new car to the database.');
     }
-}
+  };
+//     try {
+//       const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
+//       await axios.post(URL, newCarData);
+//       fetchCarsData(); // Refresh data
+//     } catch (error) {
+//       console.error('Error adding new car:', error);
+//       alert('Error adding new car to the server.');
+//     }
+// }
 
   let content;
   if (!carsData || carsData.length === 0) {
@@ -132,8 +145,8 @@ function CarsPage() {
                   <td>{car.color}</td>
                   <td>{car.price}</td>
                   <td>{car.year}</td>
-                  <td>{car.is_used === 1 ? "Yes" : "No"}</td>
-                  <td>{car.in_stock === 1 ? "Yes" : "No"}</td>
+                  <td>{car.is_used === true ? "Yes" : "No"}</td>
+                  <td>{car.in_stock === true ? "Yes" : "No"}</td>
                 </tr>
               )})}
               </tbody>
@@ -188,7 +201,7 @@ function CarsPage() {
         <label>
           Used or Not:
           <select name="is_used" value={newCarData.is_used} onChange={handleChange} required >
-          <option value="">Yes/No</option>
+          <option value="" disabled>Yes/No</option>
           <option value="1">Yes</option>
           <option value="0">No</option>
           </select>
@@ -198,7 +211,7 @@ function CarsPage() {
         <label>
           In Stock:
           <select name="in_stock" value={newCarData.in_stock} onChange={handleChange} required >
-          <option value="">Yes/No</option>
+          <option value="" disabled>Yes/No</option>
           <option value="1">Yes</option>
           <option value="0">No</option>
           </select>

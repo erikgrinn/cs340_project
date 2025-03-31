@@ -5,12 +5,12 @@
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
 
-DROP TABLE IF EXISTS Cars;
-DROP TABLE IF EXISTS Dealerships;
-DROP TABLE IF EXISTS Employees;
-DROP TABLE IF EXISTS Customers;
-DROP TABLE IF EXISTS Purchases;
 DROP TABLE IF EXISTS Cars_Purchases;
+DROP TABLE IF EXISTS Cars;
+DROP TABLE IF EXISTS Purchases;
+DROP TABLE IF EXISTS Employees;
+DROP TABLE IF EXISTS Dealerships;
+DROP TABLE IF EXISTS Customers;
 
 -- -----------------------------------------------------
 -- Create Table Dealerships

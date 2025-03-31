@@ -71,7 +71,6 @@ a:hover {
 }
 
 section {
-  
   font-size:large;
 }
 
@@ -109,7 +108,7 @@ table {
 }
 
 table th, table td {
-  border: 2px solid #d3a9a9;
+  border: 2px solid #afafaf;
   padding: 8px;
   text-align: left;
 }
