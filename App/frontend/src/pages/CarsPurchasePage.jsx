@@ -1,6 +1,8 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import { supabase } from '../../supabaseClient';
+
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -25,46 +27,39 @@ function CarsPurchasePage() {
     purchases: []
   });
 
+  const fetchCarsPurchasesData = async () => {
+      try {
+        const { data, error } = await supabase.from('cars_purchases').select('*');
+        if (error) throw error;
+        console.log('CarsPurchases:', data);
+        setcarsPurchasesData(data);
+      } catch (error) {
+        console.error('Error fetching cars purchases:', error);
+      }
+    };
+
   const fetchDropdownOptions = async () => {
     try {
-      const carsURL = `${import.meta.env.VITE_API_URL}/api/cars`; 
-      const purchasesURL = `${import.meta.env.VITE_API_URL}/api/purchases`;
-  
-      const [carsResponse, purchasesResponse] = await Promise.all([
-        axios.get(carsURL),
-        axios.get(purchasesURL)
-      ]);
-  
+      const { data: carsData, error: carsError } = await supabase.from('cars').select('*');
+      if (carsError) throw carsError;
+
+      const { data: purchasesData, error: purchasesError } = await supabase.from('purchases').select('*');
+      if (purchasesError) throw purchasesError;
+
       setDropdownOptions({
-        cars: carsResponse.data,
-        purchases: purchasesResponse.data
-      });
-    } catch (error) {
-      console.error("Error fetching dropdown options:", error);
-    }
-  };
+        cars: carsData,
+        purchases: purchasesData
+        });
+      } catch (error) {
+        console.error('Error fetching dropdown options:', error);
+      }
+    };
   
   useEffect(() => {
     fetchCarsPurchasesData();
     fetchDropdownOptions(); // Fetch dropdown options on load
   }, []);
 
-  const fetchCarsPurchasesData = async () => {
-    try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases`;
-      const response = await axios.get(URL);
-      setcarsPurchasesData(response.data);
-    } catch (error) {
-      console.error('Error fetching cars purchases data:', error);
-      alert('Error fetching cars purchases data from the server.');
-    }
-  };
-
-  // ** redundant
-  // useEffect(() => {
-  //   fetchCarsPurchasesData();
-  // }, []);
 
   const handleChange = (e) => {
     // Gets name and value
@@ -82,50 +77,50 @@ function CarsPurchasePage() {
   }
   }
 
-  // const handleEditChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setEditData({
-  //     ...editData,
-  //     [name]: value
-  //   });
-  // };
-
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases`;
-      await axios.post(URL, newCarsPurchasesData);
-      fetchCarsPurchasesData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('cars_purchases').insert([newCarsPurchasesData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchCarsPurchasesData();
+      // alert('Car added successfully!');
     } catch (error) {
-      console.error('Error adding new cars purchases:', error);
-      alert('Error adding new cars purchases to the server.');
+      console.error('Error adding new cars_purchase:', error);
+      alert('Error adding new cars_purchase to the database.');
     }
-}
+  };
 
   const handleRemoveSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${selectedCarPurchase}`;
-      console.log(selectedCarPurchase)
-      await axios.delete(URL, newCarsPurchasesData);
-      fetchCarsPurchasesData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('cars_purchases').delete().eq('car_purch_id', selectedCarPurchase);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchCarsPurchasesData();
+      // alert('Car added successfully!');
     } catch (error) {
-      console.error('Error removing new cars purchases:', error);
-      alert('Error removing new cars purchases to the server.');
+      console.error('Error adding new cars_purchase:', error);
+      alert('Error adding new cars_purchase to the database.');
     }
-  }
-
+  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+    // Exclude the `car_purch_id` field from the update payload
+    const { car_purch_id, ...sanitizedEditData } = editData;
+
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/carspurchases/${editData.car_purch_id}`;
-      await axios.put(URL, editData);
-      setEditData(null); // Hide the form after update
-      fetchCarsPurchasesData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('cars_purchases').update(sanitizedEditData).eq('car_purch_id', car_purch_id);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchCarsPurchasesData();
     } catch (error) {
-      console.error('Error updating cars purchase:', error);
-      alert('Error updating cars purchase.');
+      console.error('Error adding new purchase:', error);
+      alert('Error adding new purchase to the database.');
     }
   };
 

@@ -108,8 +108,8 @@ function PurchasePage() {
         // Refresh the cars data after successfully adding a new car
         fetchPurchasesData();
       } catch (error) {
-        console.error('Error adding new purchase:', error);
-        alert('Error adding new purchase to the database.');
+        console.error('Error editing purchase:', error);
+        alert('Error editing purchase to the database.');
       }
     };
 
