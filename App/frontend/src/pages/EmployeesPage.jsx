@@ -1,6 +1,8 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import { supabase } from '../../supabaseClient';
+
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -25,34 +27,50 @@ function EmployeesPage() {
 
   const fetchEmployeesData = async () => {
     try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/employees`;
-      const response = await axios.get(URL);
-      setEmployeesData(response.data);
+      const { data, error } = await supabase.from('employees').select('*');
+      if (error) throw error;
+      console.log('employees:', data);
+      setEmployeesData(data);
     } catch (error) {
-      console.error('Error fetching Employee data:', error);
-      alert('Error fetching Employee data from the server.');
+      console.error('Error fetching employees:', error);
     }
   };
 
   const fetchDropdownOptions = async () => {
     try {
-      const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`; 
-      const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
-  
-      const [employeesResponse, dealershipsResponse] = await Promise.all([
-        axios.get(employeesURL),
-        axios.get(dealershipsURL)
-      ]);
-  
+      const { data: employeesData, error: employeesError } = await supabase.from('employees').select('*');
+      if (employeesError) throw employeesError;
+
+      const { data: dealershipsData, error: dealershipsError } = await supabase.from('dealerships').select('*');
+      if (dealershipsError) throw dealershipsError;
+
       setDropdownOptions({
-        employees: employeesResponse.data,
-        dealerships: dealershipsResponse.data
-      });
-    } catch (error) {
-      console.error("Error fetching dropdown options:", error);
-    }
+        employees: employeesData,
+        dealerships: dealershipsData
+        });
+        console.log('Employees:', employeesData);
+        console.log('Dealerships:', dealershipsData);
+      } catch (error) {
+        console.error('Error fetching dropdown options:', error);
+      }
   };
+  //   try {
+  //     const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`; 
+  //     const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
+  
+  //     const [employeesResponse, dealershipsResponse] = await Promise.all([
+  //       axios.get(employeesURL),
+  //       axios.get(dealershipsURL)
+  //     ]);
+  
+  //     setDropdownOptions({
+  //       employees: employeesResponse.data,
+  //       dealerships: dealershipsResponse.data
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching dropdown options:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchEmployeesData();
@@ -70,14 +88,17 @@ function EmployeesPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/employees`;
-      await axios.post(URL, newEmployeeData);
-      fetchEmployeesData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('employees').insert([newEmployeeData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchEmployeesData();
+      // alert('Car added successfully!');
     } catch (error) {
-      console.error('Error adding new Employee:', error);
-      alert('Error adding new Employee to the server.');
+      console.error('Error adding new employee:', error);
+      alert('Error adding new employee to the database.');
     }
-}
+  };
 
   let content;
   if (!employeesData || employeesData.length === 0) {
