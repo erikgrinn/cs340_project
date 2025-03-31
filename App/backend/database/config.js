@@ -3,11 +3,14 @@
 // Based on: CS 340 Starter Code
 // Source URL: https://github.com/osu-cs340-ecampus/react-starter-app
 
-const { createClient } = require('@supabase/supabase-js');
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-module.exports = { supabase }
+module.exports = { pool };
 
 
 // // Get an instance of mysql we can use in the app
