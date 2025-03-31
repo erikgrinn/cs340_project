@@ -1,6 +1,8 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import { supabase } from '../../supabaseClient';
+
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -19,15 +21,15 @@ function CustomersPage() {
 
   const fetchCustomersData = async () => {
     try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/customers`;
-      const response = await axios.get(URL);
-      setCustomersData(response.data);
+      const { data, error } = await supabase.from('customers').select('*');
+      if (error) throw error;
+      console.log('Dealerships:', data);
+      setCustomersData(data);
     } catch (error) {
-      console.error('Error fetching customers data:', error);
-      alert('Error fetching customers data from the server.');
+      console.error('Error fetching customers:', error);
     }
   };
+
 
   useEffect(() => {
     fetchCustomersData();
@@ -44,14 +46,17 @@ function CustomersPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/customers`;
-      await axios.post(URL, newCustomerData);
-      fetchCustomersData(); // Refresh data
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('customers').insert([newCustomerData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchCustomersData();
+      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new customer:', error);
-      alert('Error adding new customer to the server.');
+      alert('Error adding new customer to the database.');
     }
-}
+  };
 
   let content;
   if (!customersData || customersData.length === 0) {
