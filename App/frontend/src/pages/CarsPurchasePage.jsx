@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+// import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
@@ -82,13 +82,13 @@ function CarsPurchasePage() {
   }
   }
 
-  const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditData({
-      ...editData,
-      [name]: value
-    });
-  };
+  // const handleEditChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditData({
+  //     ...editData,
+  //     [name]: value
+  //   });
+  // };
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();

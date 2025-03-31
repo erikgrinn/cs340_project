@@ -1,6 +1,8 @@
-import { Routes, Route, Link } from "react-router-dom";
+// import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { supabase } from '../../supabaseClient';
+
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -26,32 +28,53 @@ function CarsPage() {
 
   const fetchCarsData = async () => {
     try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
-      const response = await axios.get(URL);
-      setCarsData(response.data);
-      console.log("Cars Data:", response.data);
+      const { data, error } = await supabase.from('Cars').select('*');
+      if (error) throw error;
+      console.log('Cars:', data);
+      setCarsData(data);
     } catch (error) {
-      console.error('Error fetching car data:', error);
-      alert('Error fetching car data from the server.');
+      console.error('Error fetching cars:', error);
     }
   };
+    
+  //   try {
+  //     // Construct the URL for the API call
+  //     const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
+  //     const response = await axios.get(URL);
+  //     setCarsData(response.data);
+  //     console.log("Cars Data:", response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching car data:', error);
+  //     alert('Error fetching car data from the server.');
+  //   }
+  // };
 
   const fetchDropdownOptions = async () => {
     try {
-      const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`; 
-  
-      const [dealershipsResponse] = await Promise.all([
-        axios.get(dealershipsURL),
-      ]);
-  
-      setDropdownOptions({
-        dealerships: dealershipsResponse.data,
-      });
-    } catch (error) {
-      console.error("Error fetching dropdown options:", error);
+      const { data, error } = await supabase.from('Dealerships').select('*');
+      if (error) throw error;
+        console.log('dealerships:', data);
+        setDropdownOptions({
+              dealerships: data
+        });
+      } catch (error) {
+      console.error('Error fetching dealerships:', error);
     }
   };
+  //   try {
+  //     const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`; 
+  
+  //     const [dealershipsResponse] = await Promise.all([
+  //       axios.get(dealershipsURL),
+  //     ]);
+  
+  //     setDropdownOptions({
+  //       dealerships: dealershipsResponse.data,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching dropdown options:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchCarsData();
@@ -104,7 +127,7 @@ function CarsPage() {
                 return (
                 <tr key={car.car_id}>
                   <td><strong>{car.car_id}</strong></td>
-                  <td>ID: {car.dealership_id}, {city}</td>
+                  <td>ID: {car.dealership_id}, {city}</td> 
                   <td>{car.make_model}</td>
                   <td>{car.color}</td>
                   <td>{car.price}</td>
