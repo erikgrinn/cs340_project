@@ -54,23 +54,6 @@ function EmployeesPage() {
         console.error('Error fetching dropdown options:', error);
       }
   };
-  //   try {
-  //     const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`; 
-  //     const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`;
-  
-  //     const [employeesResponse, dealershipsResponse] = await Promise.all([
-  //       axios.get(employeesURL),
-  //       axios.get(dealershipsURL)
-  //     ]);
-  
-  //     setDropdownOptions({
-  //       employees: employeesResponse.data,
-  //       dealerships: dealershipsResponse.data
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching dropdown options:", error);
-  //   }
-  // };
 
   useEffect(() => {
     fetchEmployeesData();

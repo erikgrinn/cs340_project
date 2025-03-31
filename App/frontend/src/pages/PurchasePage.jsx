@@ -1,6 +1,8 @@
 // import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
+import { supabase } from '../../supabaseClient';
+
 
 // Citation for the following functions:
 // Date: 02/26/2025
@@ -26,33 +28,30 @@ function PurchasePage() {
 
   const fetchPurchasesData = async () => {
     try {
-      // Construct the URL for the API call
-      const URL = `${import.meta.env.VITE_API_URL}/api/purchases`;
-      const response = await axios.get(URL);
-      setPurchasesData(response.data);
+      const { data, error } = await supabase.from('purchases').select('*');
+      if (error) throw error;
+      console.log('employees:', data);
+      setPurchasesData(data);
     } catch (error) {
-      console.error('Error fetching purchase data:', error);
-      alert('Error fetching purchase data from the server.');
+      console.error('Error fetching purchases:', error);
     }
   };
 
   const fetchDropdownOptions = async () => {
     try {
-      const customersURL = `${import.meta.env.VITE_API_URL}/api/customers`;
-      const employeesURL = `${import.meta.env.VITE_API_URL}/api/employees`;
-  
-      const [customersResponse, employeesResponse] = await Promise.all([
-        axios.get(customersURL),
-        axios.get(employeesURL)
-      ]);
-  
+      const { data: customersData, error: customersError } = await supabase.from('customers').select('*');
+      if (customersError) throw customersError;
+
+      const { data: employeesData, error: employeesError } = await supabase.from('employees').select('*');
+      if (employeesError) throw employeesError;
+
       setDropdownOptions({
-        customers: customersResponse.data,
-        employees: employeesResponse.data
-      });
-    } catch (error) {
-      console.error("Error fetching dropdown options:", error);
-    }
+        customers: customersData,
+        employees: employeesData
+        });
+      } catch (error) {
+        console.error('Error fetching dropdown options:', error);
+      }
   };
 
   useEffect(() => {
@@ -70,54 +69,49 @@ function PurchasePage() {
 
   const handleAddSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/purchases`;
-
-      // Convert empty strings to null before sending for nullable employee_id
-      // const sanitizedData = Object.fromEntries(
-      //   Object.entries(newPurchaseData).map(([key, value]) => [
-      //     key,
-      //     value === "" ? null : value,
-      //   ])
-      // );
-
-      // another way 
-      const sanitizedData = { ...newPurchaseData };
-      for (let key in sanitizedData) {
-        if (sanitizedData[key] === "null") {
-          sanitizedData[key] = null;
-        }
+    // Convert empty strings to null before sending for nullable employee_id
+    const sanitizedData = { ...newPurchaseData };
+    for (let key in sanitizedData) {
+      if (sanitizedData[key] === "null") {
+        sanitizedData[key] = null;
       }
-      
-      console.log(sanitizedData)
-      
-      await axios.post(URL, sanitizedData);
-      fetchPurchasesData(); // Refresh data
+    }
+    console.log(sanitizedData)
+    try {
+      // Use Supabase to insert the new car data into the "cars" table
+      const { error } = await supabase.from('purchases').insert([sanitizedData]);
+      if (error) throw error;
+      // Refresh the cars data after successfully adding a new car
+      fetchPurchasesData();
     } catch (error) {
       console.error('Error adding new purchase:', error);
-      alert('Error adding new purchase to the server.');
+      alert('Error adding new purchase to the database.');
     }
-}
+  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const URL = `${import.meta.env.VITE_API_URL}/api/purchases/${editData.purchase_id}`;
-
+      // Convert empty strings to null before sending for nullable employee_id
       const sanitizedEditData = { ...editData };
+      // Exclude the `purchase_id` field from the update payload
+      delete sanitizedEditData.purchase_id;
       for (let key in sanitizedEditData) {
         if (sanitizedEditData[key] === "null") {
           sanitizedEditData[key] = null;
         }
       }
-      await axios.put(URL, sanitizedEditData);
-      setEditData(null); // Hide the form after update
-      fetchPurchasesData(); // Refresh data
-    } catch (error) {
-      console.error('Error updating purchase:', error);
-      alert('Error updating purchase.');
-    }
-  };
+      console.log(sanitizedEditData)
+      try {
+        // Use Supabase to insert the new car data into the "cars" table
+        const { error } = await supabase.from('purchases').update(sanitizedEditData).eq('purchase_id', editData.purchase_id);
+        if (error) throw error;
+        // Refresh the cars data after successfully adding a new car
+        fetchPurchasesData();
+      } catch (error) {
+        console.error('Error adding new purchase:', error);
+        alert('Error adding new purchase to the database.');
+      }
+    };
 
   const handleEditClick = (purchase) => {
     setEditData(purchase); // Load data into form
