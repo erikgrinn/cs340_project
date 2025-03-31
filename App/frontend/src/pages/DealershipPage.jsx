@@ -47,7 +47,6 @@ function DealershipPage() {
       if (error) throw error;
       // Refresh the cars data after successfully adding a new car
       fetchDealershipsData();
-      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new dealership:', error);
       alert('Error adding new dealership to the database.');

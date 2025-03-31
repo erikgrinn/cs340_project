@@ -61,20 +61,6 @@ function CarsPage() {
       console.error('Error fetching dealerships:', error);
     }
   };
-  //   try {
-  //     const dealershipsURL = `${import.meta.env.VITE_API_URL}/api/dealerships`; 
-  
-  //     const [dealershipsResponse] = await Promise.all([
-  //       axios.get(dealershipsURL),
-  //     ]);
-  
-  //     setDropdownOptions({
-  //       dealerships: dealershipsResponse.data,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching dropdown options:", error);
-  //   }
-  // };
 
   useEffect(() => {
     fetchCarsData();
@@ -98,21 +84,11 @@ function CarsPage() {
       if (error) throw error;
       // Refresh the cars data after successfully adding a new car
       fetchCarsData();
-      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new car:', error);
       alert('Error adding new car to the database.');
     }
   };
-//     try {
-//       const URL = `${import.meta.env.VITE_API_URL}/api/cars`;
-//       await axios.post(URL, newCarData);
-//       fetchCarsData(); // Refresh data
-//     } catch (error) {
-//       console.error('Error adding new car:', error);
-//       alert('Error adding new car to the server.');
-//     }
-// }
 
   let content;
   if (!carsData || carsData.length === 0) {

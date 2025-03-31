@@ -11,7 +11,7 @@ import { supabase } from '../../supabaseClient';
 
 function CarsPurchasePage() {
   // All relationships in DB. Properties: car_purch_id, car_id, purchase_id
-  const [carsPurchasesData, setcarsPurchasesData] = useState([]);
+  const [carsPurchasesData, setCarsPurchasesData] = useState([]);
   // For a new car, set car_id and purchase_id, used in Add form
   const [newCarsPurchasesData, setNewCarsPurchases] = useState({
     car_id: 0,
@@ -32,7 +32,7 @@ function CarsPurchasePage() {
         const { data, error } = await supabase.from('cars_purchases').select('*');
         if (error) throw error;
         console.log('CarsPurchases:', data);
-        setcarsPurchasesData(data);
+        setCarsPurchasesData(data);
       } catch (error) {
         console.error('Error fetching cars purchases:', error);
       }
@@ -85,7 +85,6 @@ function CarsPurchasePage() {
       if (error) throw error;
       // Refresh the cars data after successfully adding a new car
       fetchCarsPurchasesData();
-      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new cars_purchase:', error);
       alert('Error adding new cars_purchase to the database.');

@@ -23,7 +23,7 @@ function CustomersPage() {
     try {
       const { data, error } = await supabase.from('customers').select('*');
       if (error) throw error;
-      console.log('Dealerships:', data);
+      console.log('Customers:', data);
       setCustomersData(data);
     } catch (error) {
       console.error('Error fetching customers:', error);
@@ -51,7 +51,6 @@ function CustomersPage() {
       if (error) throw error;
       // Refresh the cars data after successfully adding a new car
       fetchCustomersData();
-      // alert('Car added successfully!');
     } catch (error) {
       console.error('Error adding new customer:', error);
       alert('Error adding new customer to the database.');

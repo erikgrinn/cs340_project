@@ -12,7 +12,7 @@ dotenv.config()
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/cs340_project/',
+  base: '/cs340_project',
   esbuild: {
     loader: "jsx"
   },
